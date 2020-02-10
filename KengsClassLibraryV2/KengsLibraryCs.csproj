@@ -77,6 +77,7 @@
     <Compile Include="CFncTreeView.cs" />
     <Content Include="CustomizeControl\CtrlDataGridView_SkipColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CFncComboBox.cs" />
