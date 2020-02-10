@@ -206,5 +206,21 @@ using Microsoft.VisualBasic.CompilerServices;
                 Interaction.Beep();
             }
         }
+
+    public static DateTime GetFile_CreationTime(string Path)
+    {
+        FileInfo fInfo = new FileInfo(Path);
+        return fInfo.CreationTime;
     }
+    public static DateTime GetFile_LastWriteTime(string Path)
+    {
+        FileInfo fInfo = new FileInfo(Path);
+        return fInfo.LastWriteTime;
+    }
+    public static DateTime GetFile_LastAccessTime(string Path)
+    {
+        FileInfo fInfo = new FileInfo(Path);
+        return fInfo.LastAccessTime;
+    }
+}
 //}
