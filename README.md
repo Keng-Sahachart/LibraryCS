@@ -10,7 +10,7 @@
 ```
 
 ```diff
-- รวม Function / Sub Routine / Customize Control ต่างๆ ที่ใช้บ่อยๆ ใน Project ต่างๆ เพื่อความรวดเร็วในการ เขียนโปรแกรม
+- รวม Function / Sub Routine สำเร็จรูป / Customize Control ต่างๆ ที่ใช้บ่อยๆ ใน Project ต่างๆ  เพื่อความสะดวก รวดเร็วในการ เขียนโปรแกรม
 
 + 2019/11/29 Upload My Library To GitHub
 
