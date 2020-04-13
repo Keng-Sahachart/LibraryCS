@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9A9723BB-280F-4671-9EF7-979CB9F45DD7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>KengsClassLibraryV2</RootNamespace>
+    <AssemblyName>KengsLibraryCs</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="adodb, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>InterOpDll\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Vbe.Interop, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CAutoClosingMessageBox.cs" />
+    <Compile Include="CFncArray.cs" />
+    <Compile Include="CFncString.cs" />
+    <Compile Include="ClsAS400FileData.cs" />
+    <Compile Include="ClsAutoCompleteManager.cs" />
+    <Compile Include="ClsMsSql.cs" />
+    <Compile Include="ClsTabManager.cs" />
+    <Compile Include="CFncMdiForm.cs" />
+    <Compile Include="CFncNumber.cs" />
+    <Compile Include="CFncProcessManager.cs" />
+    <Compile Include="CFncRadioButton.cs" />
+    <Compile Include="CFncREGEX.cs" />
+    <Compile Include="CFncRegistry.cs" />
+    <Compile Include="CFncSave_LoadGridFile.cs" />
+    <Compile Include="CFncTextBox.cs" />
+    <Compile Include="CFncTextFile.cs" />
+    <Compile Include="CFncTreeView.cs" />
+    <Content Include="CustomizeControl\CtrlDataGridView_SkipColumn.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CFncComboBox.cs" />
+    <Content Include="CFncDataGrid.cs" />
+    <Compile Include="CFncDataTable.cs" />
+    <Compile Include="CFncDateTime.cs" />
+    <Compile Include="ClsExcelApp.cs" />
+    <Content Include="ClsExcelInteriorColor.cs" />
+    <Compile Include="ClsCheckAllDataGridview.cs" />
+    <Compile Include="ClsAppConfig.cs" />
+    <Compile Include="CFncAS400.cs" />
+    <Compile Include="CFncControl.cs" />
+    <Compile Include="CFncGeneral.cs" />
+    <Compile Include="ClsReverseIterator.cs" />
+    <Compile Include="ClsUpdateTableByDataGridView.cs" />
+    <Compile Include="CFncDataBaseTool.cs" />
+    <Compile Include="CFncEntityFramework.cs" />
+    <Compile Include="CFncExcel.cs" />
+    <Compile Include="CFncFileFolder.cs" />
+    <Content Include="CustomizeControl\CtrlGroupBox_BorderColor.cs" />
+    <Content Include="CustomizeControl\CtrlImageToolTip.cs" />
+    <Content Include="CustomizeControl\CtrlTreeViewAdvance.cs" />
+    <Content Include="InterOpDll\Microsoft.Office.Interop.Excel.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
