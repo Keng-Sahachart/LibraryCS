@@ -559,7 +559,7 @@ namespace KengsLibraryCs
 
                     default:
                         {
-                            Separator = Separator;
+                            //Separator = Separator;
                             break;
                         }
                 }
@@ -632,7 +632,7 @@ namespace KengsLibraryCs
 
                     default:
                         {
-                            Separator = Separator;
+                            //Separator = Separator;
                             break;
                         }
                 }

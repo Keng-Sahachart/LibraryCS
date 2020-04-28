@@ -72,7 +72,7 @@ namespace KengsLibraryCs
                 foreach (DataColumn c in ret.Columns)
                     c.ColumnName = c.ColumnName.Replace("_", " ");
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 ret = new DataTable();
             }

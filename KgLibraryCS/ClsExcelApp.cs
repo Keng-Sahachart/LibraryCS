@@ -3,7 +3,8 @@ using Microsoft.VisualBasic;
 using System;
 using EXCEL = Microsoft.Office.Interop.Excel;
 using Microsoft.VisualBasic.CompilerServices;
-
+using System.Collections;
+using System.Collections.Generic;
 namespace KengsLibraryCs
 {
     /// <summary>
@@ -18,7 +19,7 @@ namespace KengsLibraryCs
         private int ProcIdXL = 0;
         private Process xproc;
 
-        public ClsExcelApp() 
+        public ClsExcelApp()
         {
 
             // XlsApp.Workbooks.Add()
@@ -87,8 +88,10 @@ namespace KengsLibraryCs
                     SheetExistsRet = true;
                 else
                     SheetExistsRet = false;
-               
-            } catch {
+
+            }
+            catch
+            {
                 SheetExistsRet = false;
             }
             return SheetExistsRet;
@@ -122,27 +125,27 @@ namespace KengsLibraryCs
             {
                 switch (XlsVer)
                 {
-                    case 11 :// Office 2003 ถ้าเป็น 2003 ให้ Save เป็น xls ธรรมดา
-                            EnumFileFormat = 43; // Excel.XlFileFormat.xlExcel9795
-                            FileFormat = "xls";
-                            break;
+                    case 11:// Office 2003 ถ้าเป็น 2003 ให้ Save เป็น xls ธรรมดา
+                        EnumFileFormat = 51;//43; // Excel.XlFileFormat.xlExcel9795
+                        FileFormat = "xls";
+                        break;
                     default:
-                            EnumFileFormat = 51;
-                            FileFormat = "xlsx";
-                            break;
+                        EnumFileFormat = 51;
+                        FileFormat = "xlsx";
+                        break;
                 }
             }
             else
                 switch (XlsVer)
                 {
                     case 11: // Office 2003
-                            EnumFileFormat = 43; // Excel.XlFileFormat.xlExcel9795
-                            FileFormat = "xls";
-                            break;
+                        EnumFileFormat = 43; // Excel.XlFileFormat.xlExcel9795
+                        FileFormat = "xls";
+                        break;
                     default:
-                            EnumFileFormat = 56;
-                            FileFormat = "xls";
-                            break;
+                        EnumFileFormat = 56;
+                        FileFormat = "xls";
+                        break;
                 }
 
             string FileNameSaveFull;
@@ -152,5 +155,65 @@ namespace KengsLibraryCs
             App.ActiveWorkbook.SaveAs(FileNameSaveFull, EnumFileFormat);
             return FileNameSaveFull;
         }
+
+        //    ''' <summary>
+        //''' Move หลายๆ ชีท เพื่อ สร้าง WorkBook ใหม่  (OverLoad Function)
+        //''' </summary>
+        //''' <param name="XlsApp">ClassExcelApp</param>
+        //''' <param name="wBook">Workbook ที่เก็บ Worksheet อยู่</param>
+        //''' <param name="wSht_ArrayList">ตัวแปร Array List ที่เก็บ WorkSheet เข้ามา</param>
+        //''' <param name="PathFile">ตำแหน่ง ชื่อไฟล์ ที่จะเซฟเก็บไว้</param>
+        //''' <remarks>590426 OverLoad Function</remarks>
+        //Sub SaveSheetToNewWorkBook(XlsApp As ClassExcelApp, wBook As EXCEL.Workbook, wSht_ArrayList As ArrayList, PathFile As String)
+        //    wBook.Activate()
+        //    ' wSht.Activate()
+
+        //    Dim wShtName As New ArrayList
+        //    For Each wSht In wSht_ArrayList
+        //        wShtName.Add(wSht.name)
+        //    Next
+        //    Dim StrwShtNm = wShtName.ToArray()
+
+        //    wBook.Sheets(StrwShtNm).Move() '* New workBook และ Move ชีทนี้ไปที่ New WorkBook พร้อมๆกัน
+        //    Dim wBkRpt = XlsApp.App.ActiveWorkbook 'workBook ที่เพิ่ง new 
+        //    wBkRpt.SaveAs(PathFile, EXCEL.XlFileFormat.xlWorkbookNormal) '.XLS
+        //    wBkRpt.Close() ' ปิด workbook ก่อน ไปทำงาน อื่นต่อ * เอาออก เมื่อต้องใช้ชีทนี้ทำต่อ
+
+        //    wBook.Activate() 'กลับไปที่ WorkBook เก่า
+
+        //End Sub
+
+        public void SaveSheetToNewWorkBook(EXCEL.Workbook wBook,  ArrayList wSht_ArrayList ,string PathFile)//)//  
+        {
+
+            ((EXCEL._Workbook)wBook).Activate();
+            //ArrayList wShtName = new ArrayList()
+
+            List<string> LstwShtName = new List<string>();
+
+            foreach (EXCEL.Worksheet wSht in wSht_ArrayList)
+            {
+                LstwShtName.Add(wSht.Name);
+            }
+
+            string[] StrwShtNm = LstwShtName.ToArray();
+
+            //    wBook.Sheets(StrwShtNm).Move() '* New workBook และ Move ชีทนี้ไปที่ New WorkBook พร้อมๆกัน
+            wBook.Sheets[StrwShtNm].Move();
+
+            //    Dim wBkRpt = XlsApp.App.ActiveWorkbook 'workBook ที่เพิ่ง new 
+            EXCEL.Workbook wBkRpt = App.ActiveWorkbook;
+
+            wBkRpt.SaveAs(PathFile, EXCEL.XlFileFormat.xlWorkbookNormal);
+            wBkRpt.Close();// ปิด workbook ก่อน ไปทำงาน อื่นต่อ * เอาออก เมื่อต้องใช้ชีทนี้ทำต่อ
+
+            ((EXCEL._Workbook)wBook).Activate();//กลับไปที่ WorkBook เก่า
+
+        }
+
+
+
+
+
     }
 }

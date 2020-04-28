@@ -374,7 +374,7 @@ namespace KengsLibraryCs
             {
                 var xlApp = new Excel.Application();
                 Excel.Workbook wBook;
-                var wSheet = new Excel.Worksheet();
+                Excel.Worksheet wSheet = new Excel.Worksheet();
                 xlApp.DisplayAlerts = false;
                 wBook = xlApp.Workbooks.Add();
                 wSheet = (Excel.Worksheet)wBook.Worksheets[1];

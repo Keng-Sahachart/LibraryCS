@@ -40,33 +40,34 @@ namespace KengsLibraryCs
     /// <param name="TrueOrFalse">กำหนด สถานะ ใช่หรือไม่ใช่</param>
         public static void Set_FontSizeAutoFit(ref Excel.Worksheet wSheet, object Range, bool TrueOrFalse = true)
         {
-            wSheet.get_Range(wSheet).ShrinkToFit = TrueOrFalse;
+            wSheet.get_Range(Range).ShrinkToFit = TrueOrFalse;
         }
 
-        public static void Do_Merge(ref Excel.Worksheet wSheet, object Range)
+        public static void Do_Merge(ref Excel._Worksheet wSheet, object Range)
         {
             wSheet.Activate();
+
             wSheet.get_Range(Range).Merge();
         }
 
-        public static void Set_Alignment_Vertical(ref Excel.Worksheet wsheet, object Range, Excel.XlVAlign Align)
+        public static void Set_Alignment_Vertical(ref Excel._Worksheet wsheet, object Range, Excel.XlVAlign Align)
         {
             wsheet.Activate();
             wsheet.get_Range(Range).VerticalAlignment = Align;
         }
 
-        public static void Set_Alignment_Horizontal(ref Excel.Worksheet wsheet, object Range, Excel.XlVAlign Align)
+        public static void Set_Alignment_Horizontal(ref Excel._Worksheet wsheet, object Range, Excel.XlVAlign Align)
         {
             wsheet.Activate();
             wsheet.get_Range(Range).HorizontalAlignment = Align;
         }
-        public static void Sheet_SetBorderCellAround(ref Excel.Worksheet wSheet, object Range, Excel.XlLineStyle XlLineStyle)
+        public static void Sheet_SetBorderCellAround(ref Excel._Worksheet wSheet, object Range, Excel.XlLineStyle XlLineStyle)
         {
             wSheet.Activate();
             wSheet.get_Range(Range).BorderAround(XlLineStyle);
         }
 
-        public static void Sheet_SetBorderCell(ref Excel.Worksheet wSheet, object Range, Excel.XlLineStyle XlLineStyle
+        public static void Sheet_SetBorderCell(ref Excel._Worksheet wSheet, object Range, Excel.XlLineStyle XlLineStyle
                                 , Excel.XlBordersIndex XlBorderIndex = default(Excel.XlBordersIndex))
         {
             wSheet.Activate();
@@ -82,7 +83,7 @@ namespace KengsLibraryCs
     /// <param name="Red">ค่า  0-255 </param>
     /// <param name="Green">ค่า  0-255 </param>
     /// <param name="Blue">ค่า  0-255 </param>
-        public static void Sheet_BackGroundColor(ref Excel.Worksheet wSheet, string Range, int Red, int Green, int Blue)
+        public static void Sheet_BackGroundColor(ref Excel._Worksheet wSheet, string Range, int Red, int Green, int Blue)
         {
             wSheet.Activate();
             wSheet.get_Range(Range).Interior.Color = Information.RGB(Red, Green, Blue);
@@ -122,7 +123,7 @@ namespace KengsLibraryCs
 
         /// <summary>หาหมายเลขของ Row สุดท้ายที่ถูกใช้งาน</summary>
     /// <param name="wSheet"> WorkSheet ที่ต้องการทราบ Row สุดท้ายที่ถูกใช้งาน</param>
-        public static int SheetLastRow(Excel.Worksheet wSheet)
+        public static int SheetLastRow(Excel._Worksheet wSheet)
         {
             wSheet.Activate();
            
@@ -130,21 +131,21 @@ namespace KengsLibraryCs
             return wSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row; // xlCellTypeLastCell).Row()
         }
 
-        public static void FreezePane(ref Excel.Worksheet wSheet, string RangeSelect)
+        public static void FreezePane(ref Excel._Worksheet wSheet, string RangeSelect)
         {
             wSheet.get_Range(RangeSelect).Application.ActiveWindow.FreezePanes = true;
         }
 
         /// <summary>หาหมายเลขของ Column สุดท้ายที่ถูกใช้งาน</summary>
     /// <param name="wSheet"> WorkSheet ที่ต้องการทราบ Column สุดท้ายที่ถูกใช้งาน</param>
-        public static int SheetLastColumn(Excel.Worksheet wSheet)
+        public static int SheetLastColumn(Excel._Worksheet wSheet)
         {
             wSheet.Activate();
             // Return wSheet.UsedRange.Columns.Count()
             return wSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Column;
         }
 
-        public static void SheetAutoFill_From1Cell(ref Excel.Worksheet wSheet, string ValueFirstCell, string Range)
+        public static void SheetAutoFill_From1Cell(ref Excel._Worksheet wSheet, string ValueFirstCell, string Range)
         {
             // create formula
             wSheet.Activate();
@@ -240,7 +241,7 @@ namespace KengsLibraryCs
     /// <remarks></remarks>
         public static void SetCursurAllSheetInWBook(ref Excel.Workbook wBook, string StrRange)
         {
-            foreach (Excel.Worksheet wSht in wBook.Worksheets)
+            foreach (Excel._Worksheet wSht in wBook.Worksheets)
             {
                 if ((int)wSht.Visible == (int)Excel.XlSheetVisibility.xlSheetVisible)
                 {
@@ -257,14 +258,14 @@ namespace KengsLibraryCs
     /// <param name="wSheet"> WorkSheet</param>
     /// <param name="SourceNumberToColumnName"> ชื่อ Column ที่ต้องการ Copy</param>
     /// <param name="DestinationNumberToColumnName"> ชื่อ Column ที่ต้องการ Paste ข้อมูลทับ</param>
-        public static void ExcelCopyColumn(ref Excel.Worksheet wSheet, string SourceNumberToColumnName, string DestinationNumberToColumnName)
+        public static void ExcelCopyColumn(ref Excel._Worksheet wSheet, string SourceNumberToColumnName, string DestinationNumberToColumnName)
         {
             wSheet.Activate();
             wSheet.Columns[SourceNumberToColumnName].copy();
             wSheet.Columns[DestinationNumberToColumnName].Select();
             wSheet.Paste();
         }
-        public static void ExcelCopyColumnSheetToSheet(ref Excel.Worksheet wSheetCopy, string SourceNumberToColumnName, ref Excel.Worksheet wSheetPast, string DestinationNumberToColumnName)
+        public static void ExcelCopyColumnSheetToSheet(ref Excel._Worksheet wSheetCopy, string SourceNumberToColumnName, ref Excel._Worksheet wSheetPast, string DestinationNumberToColumnName)
         {
             wSheetCopy.Activate();
             wSheetCopy.Columns[SourceNumberToColumnName].copy();
@@ -272,7 +273,7 @@ namespace KengsLibraryCs
             wSheetPast.Columns[DestinationNumberToColumnName].Select();
             wSheetPast.Paste();
         }
-        public static void ExcelCopyRow(ref Excel.Worksheet wSheet, int SourceRowNumber, string TargetrRowNumber)
+        public static void ExcelCopyRow(ref Excel._Worksheet wSheet, int SourceRowNumber, string TargetrRowNumber)
         {
             wSheet.Activate();
             wSheet.Rows[SourceRowNumber].copy();
@@ -288,7 +289,7 @@ namespace KengsLibraryCs
                 wBook.Sheets[numSheetToCopy].Copy(Before: wBook.Sheets[numSheetDestination]);
             }
             // Return wShtRet 'wBook.Worksheets(numSheetDestination)
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 wBook.Sheets[numSheetToCopy].Copy(after: wBook.Sheets[wBook.Sheets.Count]);
             }
@@ -298,13 +299,13 @@ namespace KengsLibraryCs
         /// <summary>
     /// Copy ทุกชีทจาก WorkBook แรก ไปอยู่อีก WorkBook ที่สอง
     /// </summary>
-        public static void CopyWorkBookToWorkBook(ref Excel.Workbook wBookSource, ref Excel.Workbook wBookDestination)
+        public static void CopyWorkBookToWorkBook(ref Excel._Workbook wBookSource, ref Excel.Workbook wBookDestination)
         {
             wBookSource.Activate();
             for (int nSht = 1, loopTo = wBookSource.Worksheets.Count; nSht <= loopTo; nSht++)
                 wBookSource.Sheets[nSht].Copy(Before: wBookDestination.Sheets[nSht]);
         }
-        public static void Sort2Column(ref Excel.Worksheet wSheet, string NumberToColumnName1, string NumberToColumnName2)
+        public static void Sort2Column(ref Excel._Worksheet wSheet, string NumberToColumnName1, string NumberToColumnName2)
         {
             wSheet.Activate();
 
@@ -312,7 +313,7 @@ namespace KengsLibraryCs
         }
         // 
         /// <summary> ConvertTextToColumn(SheetOpen, "A", "~") </summary>
-        public static void ConvertTextToColumn(ref Excel.Worksheet wSheet, string DataColumn, string SymbolExplode)
+        public static void ConvertTextToColumn(ref Excel._Worksheet wSheet, string DataColumn, string SymbolExplode)
         {
             wSheet.Activate();
            
@@ -331,31 +332,31 @@ namespace KengsLibraryCs
     //, FieldInfo: new[] { { 1, 2 }, { 2, 2 } });
     //    }
 
-        public static void wSheetInsertRow(ref Excel.Worksheet wSheet, int nRow, int ManyRows = 1)
+        public static void wSheetInsertRow(ref Excel._Worksheet wSheet, int nRow, int ManyRows = 1)
         {
             wSheet.Activate();
             for (int i = 1, loopTo = ManyRows; i <= loopTo; i++)
                 wSheet.Rows[nRow].Insert(Shift: Excel.XlDirection.xlDown);
         }
-        public static void Set_FormatCell(ref Excel.Worksheet wSheet, string Range, string StringFormat)
+        public static void Set_FormatCell(ref Excel._Worksheet wSheet, string Range, string StringFormat)
         {
             wSheet.Activate();
             wSheet.get_Range(Range).NumberFormat = StringFormat;
         }
-        public static void wSheetNumberFormatInComma(ref Excel.Worksheet wSheet, string Range)
+        public static void wSheetNumberFormatInComma(ref Excel._Worksheet wSheet, string Range)
         {
             wSheet.Activate();
             wSheet.get_Range(Range).NumberFormat = "_-* #,##0.00_-;-* #,##0.00_-;_-* \"-\"??_-;_-@_-";
         }
 
 
-        public static void wSheetReplaceAll(ref Excel.Worksheet wSheet, string ToFind, string ToReplace)
+        public static void wSheetReplaceAll(ref Excel._Worksheet wSheet, string ToFind, string ToReplace)
         {
             wSheet.Activate();
             wSheet.Cells.Replace(ToFind, ToReplace, 2, 1, false, false, false, false);
         }
         /// <summary>Replace คำ กำหนด Range ได้</summary>
-        public static void wSheetReplaceInRANGe(ref Excel.Worksheet wSheet, string ToFind, string ToReplace, string Range = null)
+        public static void wSheetReplaceInRANGe(ref Excel._Worksheet wSheet, string ToFind, string ToReplace, string Range = null)
         {
             wSheet.Activate();
             if (Range != null)
@@ -363,7 +364,7 @@ namespace KengsLibraryCs
             else
                 wSheet.UsedRange.Replace(ToFind, ToReplace, 2, 1, false, false, false, false);
         }
-        public static void SheetDestroySpaceBarCell(ref Excel.Worksheet wSheet) // เร็ว 1 จากการเทียบ กับ ฟังชั่นอื่น รู้สึกว่า การ Count จะทำให้นาน
+        public static void SheetDestroySpaceBarCell(ref Excel._Worksheet wSheet) // เร็ว 1 จากการเทียบ กับ ฟังชั่นอื่น รู้สึกว่า การ Count จะทำให้นาน
         {
             wSheet.Activate(); // แต่ฟังชั่นนี้ เร็วเพราะ ใช้วิธีการ Replace ช่องว่าง ให้หมด แล้วนับ ว่าเป็น 0 หรือไม่ ต่างกับฟังชั้นที่ใช้การ นับช่องว่าง
             int LastRow = wSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
@@ -390,7 +391,7 @@ namespace KengsLibraryCs
     /// <param name="wSheet">ตัวแปร WorkSheet ที่ต้องการจะนำมาลบตัวอักษรที่ต้องการลบ</param>
     /// <param name="OneChar1">ตัวอักษรทั้ง 5 ตัว ถ้ามีเฉพาะ 5 ตัวนี้ใน Cell จะโดนลบออกไปจาก Sheet</param>
     /// <remarks>อะรูไม่ไร้</remarks>
-        public static void SheetDestroyCharCell(ref Excel.Worksheet wSheet, string OneChar1, string OneChar2 = null, string OneChar3 = null, string OneChar4 = null, string OneChar5 = null) // เร็ว 1 จากการเทียบ กับ ฟังชั่นอื่น รู้สึกว่า การ Count จะทำให้นาน
+        public static void SheetDestroyCharCell(ref Excel._Worksheet wSheet, string OneChar1, string OneChar2 = null, string OneChar3 = null, string OneChar4 = null, string OneChar5 = null) // เร็ว 1 จากการเทียบ กับ ฟังชั่นอื่น รู้สึกว่า การ Count จะทำให้นาน
         {
             wSheet.Activate(); // แต่ฟังชั่นนี้ เร็วเพราะ ใช้วิธีการ Replace ช่องว่าง ให้หมด แล้วนับ ว่าเป็น 0 หรือไม่ ต่างกับฟังชั้นที่ใช้การ นับช่องว่าง
             int LastRow = wSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
@@ -432,7 +433,7 @@ namespace KengsLibraryCs
         }
 
         /// <summary> ลบ ช่องว่าง ทางซ้ายและทางขวา ของข้อความออก </summary>
-        public static void SheetTrimCell(ref Excel.Worksheet wSheet)
+        public static void SheetTrimCell(ref Excel._Worksheet wSheet)
         {
             wSheet.Activate();
             int LastRow = wSheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
@@ -450,7 +451,7 @@ namespace KengsLibraryCs
         }
 
         /// <summary> ลบ ช่องว่าง ทางซ้ายและทางขวา ของข้อความออก </summary>
-        public static void SheetTrimCellQuick(ref Excel.Worksheet wSheet, string Range = null)
+        public static void SheetTrimCellQuick(ref Excel._Worksheet wSheet, string Range = null)
         {
             wSheet.Activate();
             Excel.Range SheetRang;
@@ -463,7 +464,7 @@ namespace KengsLibraryCs
         }
 
         /// <summary> Copy ค่าที่อยู่ ใน Cell เหนือ Cell ที่มีช่องว่าง มาใส่ในช่องว่าง </summary>
-        public static void SheetColumnCopyFall(ref Excel.Worksheet wSheet, int ColumnNumber)
+        public static void SheetColumnCopyFall(ref Excel._Worksheet wSheet, int ColumnNumber)
         {
             // ก่อนใช้ฟังชั่นนี้อย่าลืม ใช้คำสั่ง Trim ก่อน ไม่ใช่นั้น อาจะไม่ได้ผล
             wSheet.Activate();
@@ -533,7 +534,7 @@ namespace KengsLibraryCs
     /// <param name="ColumnNumberToFind">หมายเลข  Column ที่ต้องการหา</param>
     /// <param name="ColorIndex">หมายเลขของ Excel Interior Color  : 1-56</param>
     /// <param name="Req_Trim">ต้องการ Trim ก่อน เปรียบเทียบคำหรือไม่</param>
-        public static void HiLightRowByWordInColumn(ref Excel.Worksheet wSheet, string strSearch, int ColumnNumberToFind, int ColorIndex, bool Req_Trim = true)
+        public static void HiLightRowByWordInColumn(ref Excel._Worksheet wSheet, string strSearch, int ColumnNumberToFind, int ColorIndex, bool Req_Trim = true)
         {
             wSheet.Activate();
             int nLastRow = SheetLastRow(wSheet);
@@ -552,7 +553,7 @@ namespace KengsLibraryCs
     /// <param name="strSearch">คำที่ต้องการค้นหา</param>
     /// <param name="RangeToFind">หมายเลข  Column ที่ต้องการหา</param>
     /// <param name="ColorIndex">หมายเลขของ Excel Interior Color  : 1-56</param>
-        public static void HiLightRowByWordInRange(ref Excel.Worksheet wSheet, string RangeToFind, int ColorIndex
+        public static void HiLightRowByWordInRange(ref Excel._Worksheet wSheet, string RangeToFind, int ColorIndex
                                            , string strSearch
                                            , Excel.XlFindLookIn LookIn_Inp = Excel.XlFindLookIn.xlValues
                                            , Excel.XlLookAt LookAt_Inp = Excel.XlLookAt.xlWhole
@@ -674,7 +675,7 @@ namespace KengsLibraryCs
                 oModule.CodeModule.AddFromString(MacroCode);
                 return true;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 return false;
             }
@@ -718,7 +719,7 @@ namespace KengsLibraryCs
 
                 return true;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 return false;
             }
@@ -830,7 +831,7 @@ namespace KengsLibraryCs
         /// <summary> เซฟไฟล์ Excel เป็น CSV </summary>
     /// <param name="wSheet"> wSheet ที่ จะ เซฟ </param>
     /// <param name="PathSave"> ที่อยู่ตำแหน่งไฟล์ ที่ต้องการเซฟ </param>
-        public static void ExcelSaveAsCsv(Excel.Worksheet wSheet, string PathSave)
+        public static void ExcelSaveAsCsv(Excel._Worksheet wSheet, string PathSave)
         {
             wSheet.Activate();
             wSheet.SaveAs(PathSave, Excel.XlFileFormat.xlCSVWindows);
@@ -844,7 +845,7 @@ namespace KengsLibraryCs
     /// <param name="wSheet">ตัวแปร อ็อบเจ็ก ชนิด Excel.WorkSheet</param>
     /// <param name="RangeStart">กำหนด เซลล์แรก ที่จะนำข้อมูลใส่ลงไป</param>
     /// <param name="sqlSelect">คำสั่ง Select ที่ดึงข้อมูลออกมา</param>
-        public static void QueryTableToExcel(string HostDB, string DatabaseName, string UserDB, string PassDB, ref Excel.Worksheet wSheet, string RangeStart, string sqlSelect)
+        public static void QueryTableToExcel(string HostDB, string DatabaseName, string UserDB, string PassDB, ref Excel._Worksheet wSheet, string RangeStart, string sqlSelect)
         {
             wSheet.Activate();
             string ConnString = string.Format("OLEDB;Provider=SQLOLEDB.1;Data Source={0};Initial Catalog={1};Persist Security Info=False;User ID={2} ;password={3}", HostDB, DatabaseName, UserDB, PassDB);
@@ -1064,7 +1065,7 @@ namespace KengsLibraryCs
 
                 ExcelCon.Close();
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
             }
 
@@ -1252,7 +1253,7 @@ namespace KengsLibraryCs
                 dt.Rows[0].Delete(); // ก่อน ส่งกลับ ให้ ลบ Row F1 F2 F3 ....Fx ออกก่อน
                 dt.AcceptChanges(); // แก้อาการฟ้อง Error => deleted row information cannot be accessed through the row. เมื่อเรียกใช้งาน
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
             }
 
@@ -1381,7 +1382,7 @@ namespace KengsLibraryCs
                 dt.Rows[0].Delete(); // ก่อน ส่งกลับ ให้ ลบ Row F1 F2 F3 ....Fx ออกก่อน
                 dt.AcceptChanges(); // แก้อาการฟ้อง Error => deleted row information cannot be accessed through the row. เมื่อเรียกใช้งาน
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
             }
 
@@ -1603,7 +1604,7 @@ namespace KengsLibraryCs
                 AppXl.Quit();
                 return true;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 return false;
             }
@@ -1615,7 +1616,7 @@ namespace KengsLibraryCs
         public static void DataTableToExcelSheet(ref DataTable DataTable, ref Excel.Worksheet wSheet)
         {
             // Dim wSheet As New Excel.Worksheet
-            wSheet.Activate();
+           ((Excel._Worksheet) wSheet).Activate();
             // Dim s As String
             int nRow = DataTable.Rows.Count - 1;
             int nCol = DataTable.Columns.Count - 1;
@@ -1638,7 +1639,7 @@ namespace KengsLibraryCs
     /// <remarks>อะรูไม่ไร้</remarks>
         public static DataTable QryTableToExcelSheet(ref Excel.Worksheet wSheet, ref OleDbConnection OleDbCon, string sqlSelect) // ฟังชั้นนี้อาจมีการเปลี่ยนแปลง เพราะ ใช้ oledb
         {
-            wSheet.Activate();
+           ((Excel._Worksheet) wSheet).Activate();
             var myDataAdapter = new OleDbDataAdapter(sqlSelect, OleDbCon);
             var myDataTable = new DataTable();
             myDataTable.Clear();
@@ -1745,7 +1746,7 @@ namespace KengsLibraryCs
     /// <param name="wsht">Worksheet</param>
     /// <param name="Range">Range</param>
     /// <remarks></remarks>
-        public static void RefreshCellByRange(Excel.Worksheet wsht, Excel.Range Range)
+        public static void RefreshCellByRange(Excel._Worksheet wsht, Excel.Range Range)
         {
             wsht.Activate();
             //Excel.Range Cell;

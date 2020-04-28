@@ -44,7 +44,7 @@ namespace KengsLibraryCs
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 // MsgBox(ex.Message)
                 return false;

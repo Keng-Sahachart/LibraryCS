@@ -51,12 +51,12 @@ using Microsoft.VisualBasic.CompilerServices;
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 return false;
             }
 
-            return false;
+            //return false;
         }
         /// <summary>
         /// เปิด Folder ขึ้นมาด้วย Windows Explorer
@@ -129,7 +129,7 @@ using Microsoft.VisualBasic.CompilerServices;
             }
             return NewFileName;
         }
-        public static object NewFolderNameUnique(string PathFolder)
+        public static string NewFolderNameUnique(string PathFolder)
         {
             int Counter = 0;
             string NewPathFolder = PathFolder;

@@ -63,7 +63,7 @@ namespace KengsLibraryCs
                 {
                     xml_S = client.DownloadString(Url);
                 }
-                catch  (Exception ex)
+                catch  //(Exception ex)
                 {
                     return false;
                 }

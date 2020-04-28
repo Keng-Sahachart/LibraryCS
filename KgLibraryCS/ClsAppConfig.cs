@@ -94,7 +94,7 @@ namespace KengsLibraryCs
                 ConnnectionStr.ConnectionStrings.Add(ConStrSett);
                 config.Save(ConfigurationSaveMode.Modified);
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 ConnnectionString_Edit(Key, Value);
             }

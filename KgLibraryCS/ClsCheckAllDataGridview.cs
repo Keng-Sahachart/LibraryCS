@@ -55,7 +55,7 @@ namespace KengsLibraryCs
                 dgvSelectAll.CurrentCellDirtyStateChanged += new EventHandler(dgvSelectAll_CurrentCellDirtyStateChanged);
                 dgvSelectAll.CellPainting += new DataGridViewCellPaintingEventHandler(dgvSelectAll_CellPainting);
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
             }
         }

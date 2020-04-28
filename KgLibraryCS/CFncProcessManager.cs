@@ -74,7 +74,7 @@ namespace KengsLibraryCs
                         p.Kill();
                 }
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
             }
         }
