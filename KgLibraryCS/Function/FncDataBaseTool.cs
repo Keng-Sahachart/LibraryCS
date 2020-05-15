@@ -6,7 +6,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     public static class FncDataBaseTool
     {
@@ -385,12 +385,12 @@ namespace KengsLibraryCs
     /// <param name="ToTableName">ชื่อตาราง ปลายทาง</param>
     /// <param name="PathSaveFile">ตำแหน่งเซฟไฟล์ ถ้าต้องการ Backup ให้ใส่ Parameter</param>
     /// <remarks>เรียกใช้ ฟังก์ชั่น สำเร็จรูปอื่นๆ</remarks>
-        public static void ImportQryAS400ToTableDataBase(string FileName, string Member, string Separator, string ConnString, string ToTableName, string PathSaveFile = null)
+        public static void ImportQryAS400ToTableDataBase(string FileName, string Member, string Separator, string ConnString, string ToTableName, string PathSaveFile = null, bool AppendData = false)
         {
             DataTable dtToImport = null;
             string AS400_FileName = FileName;
 
-            dtToImport = CFncAS400.QryAS400ToDatatableV2(AS400_FileName, Member);
+            dtToImport = FncAS400.QryAS400ToDatatableV2(AS400_FileName, Member);
             // ###############################################
 
             // ###############################################
@@ -398,30 +398,35 @@ namespace KengsLibraryCs
             if (dtToImport.Columns.Count == 1 & Separator != null)
             {
                 // มี Col เดียว เพราะเพิ่ง Qry มาจาก AS400 ใหม่ๆ หรือ เป็น DT มาจากไฟล์ W Excel ที่ยังไม่ TextToCol 
-                dtToImport = CFncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
-                dtToImport = CFncDataTable.DatatableTrimCell(dtToImport);
+                dtToImport = FncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
+                dtToImport = FncDataTable.DatatableTrimCell(dtToImport);
             }
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = CFncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
-                PathSaveFile = CFncFileFolder.NewFileNameUnique(PathSaveFile);
-                CFncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
+                PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
+                FncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
             }
             // ###################
-            var SqlServer = new ClsMsSql(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
+            var SqlServer = new MsSql_Manager(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
                                                                   // ## นำ ข้อมูล As400 เข้า DataBase
                                                                   // สร้างคำสั่งสร้างตารางสำหรับ นำ ไฟล์ As400 เข้า DataBase
             string Imp_TableName = ToTableName;
 
             string SqlCrtImptTable = GenCreateTableImport(Imp_TableName, dtToImport.Columns.Count);
 
-            // สร้างตาราง ตรวจสอบว่ามีตารางหรือไม่แล้ว ถ้ามีให้ลบก่อนสร้าง
-            if (SqlServer.TableExists(Imp_TableName) == true)
-                SqlServer.DeleteTable(Imp_TableName);
-            SqlServer.ExecuteNonQuery(SqlCrtImptTable);
 
+            if (AppendData == false)
+            {
+                // สร้างตาราง ตรวจสอบว่ามีตารางหรือไม่แล้ว ถ้ามีให้ลบก่อนสร้าง
+                if (SqlServer.TableExists(Imp_TableName) == true)
+                {
+                    SqlServer.DeleteTable(Imp_TableName);
+                }
+                SqlServer.ExecuteNonQuery(SqlCrtImptTable);
+            }
             // ###################
             SqlServer.CopyDatatableToDatabaseTable(dtToImport, Imp_TableName);
 
@@ -446,7 +451,7 @@ namespace KengsLibraryCs
         public static void ImportQryAS400ToTableDataBaseWithFileData(string FileName, string Member, string Separator, string ConnString, string ToTableName, string PathSaveFile = null, bool NewTbOrCollec = true, int NumberColumnImprtTb = default(int))
         {
             // เตรียม ข้อมูลของไฟล์ W 
-            var FileW_Data = new ClsAS400FileData(FileName);
+            var FileW_Data = new FileWDataAS400(FileName);
             var Col_SaveDate = new DataColumn("SaveDate", typeof(string));
             var Col_cDate = new DataColumn("cDate", typeof(string));
             var Col_cTime = new DataColumn("cTime", typeof(string));
@@ -457,7 +462,7 @@ namespace KengsLibraryCs
             var Col_mName = new DataColumn("mName", typeof(string));
             var Col_mRecords = new DataColumn("mRecords", typeof(string));
             Col_SaveDate.DefaultValue = DateAndTime.Now.ToString("yyyy-MM-dd HH:mm:ss.f");
-            Col_cDate.DefaultValue = FileW_Data.CreateDate; // ClsAS400FileData.CreateDate
+            Col_cDate.DefaultValue = FileW_Data.CreateDate; // FileWDataAS400.CreateDate
             Col_cTime.DefaultValue = FileW_Data.CreateTime;
             Col_chgDate.DefaultValue = FileW_Data.ChangeDate;
             Col_chgTime.DefaultValue = FileW_Data.ChangeTime;
@@ -470,7 +475,7 @@ namespace KengsLibraryCs
             DataTable dtToImport = null;
             string AS400_FileName = FileName;
 
-            dtToImport = CFncAS400.QryAS400ToDatatableV2(AS400_FileName, Member);
+            dtToImport = FncAS400.QryAS400ToDatatableV2(AS400_FileName, Member);
             // ###############################################
 
             // ###############################################
@@ -478,12 +483,12 @@ namespace KengsLibraryCs
             if (dtToImport.Columns.Count == 1 & Separator != null)
             {
                 // มี Col เดียว เพราะเพิ่ง Qry มาจาก AS400 ใหม่ๆ หรือ เป็น DT มาจากไฟล์ W Excel ที่ยังไม่ TextToCol 
-                dtToImport = CFncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
-                dtToImport = CFncDataTable.DatatableTrimCell(dtToImport);
+                dtToImport = FncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
+                dtToImport = FncDataTable.DatatableTrimCell(dtToImport);
             }
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = CFncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
 
             // เพิ่ม Column Data ก่อน Import หรือ เซฟไฟล์ Text
             int Pos = 0;
@@ -500,11 +505,11 @@ namespace KengsLibraryCs
             // บันทึกเป็น Text File ด้วย
             if (PathSaveFile != null)
             {
-                PathSaveFile = CFncFileFolder.NewFileNameUnique(PathSaveFile);
-                CFncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
+                PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
+                FncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
             }
             // ###################
-            var SqlServer = new ClsMsSql(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
+            var SqlServer = new MsSql_Manager(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
                                                                   // ## นำ ข้อมูล As400 เข้า DataBase
                                                                   // สร้างคำสั่งสร้างตารางสำหรับ นำ ไฟล์ As400 เข้า DataBase
             string Imp_TableName = ToTableName;
@@ -566,24 +571,24 @@ namespace KengsLibraryCs
             }
 
             if ((Path.GetExtension(XLSFileName) ?? "") == ".txt")
-                dtToImport = CFncSave_LoadGridFile.LoadTxtToDataTable(XLSFileName, "<&>");
+                dtToImport = FncSave_LoadGridFile.LoadTxtToDataTable(XLSFileName, "<&>");
             else
                 // dtToImport = FncExcel.ConvertExcelFileToDataTableV5(txt_File.Text, numUD.Value)
-                dtToImport = CFncExcel.ConvertExcelFileToDataTableV5(XLSFileName, 1, 2);
+                dtToImport = FncExcel.ConvertExcelFileToDataTableV5(XLSFileName, 1, 2);
 
             if (dtToImport.Columns.Count == 1 & (Separator != null | !string.IsNullOrEmpty(Separator)))
                 // มี Col เดียว เพราะเพิ่ง Qry มาจาก AS400 ใหม่ๆ หรือ เป็น DT มาจากไฟล์ W Excel ที่ยังไม่ TextToCol 
-                dtToImport = CFncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
+                dtToImport = FncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = CFncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
-                PathSaveFile = CFncFileFolder.NewFileNameUnique(PathSaveFile);
-                CFncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
+                PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
+                FncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
             }
             // ###################
-            var SqlServer = new ClsMsSql(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
+            var SqlServer = new MsSql_Manager(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
                                                                   // ## นำ ข้อมูล As400 เข้า DataBase
                                                                   // สร้างคำสั่งสร้างตารางสำหรับ นำ ไฟล์ As400 เข้า DataBase
             string Imp_TableName = ToTableName;
@@ -639,21 +644,21 @@ namespace KengsLibraryCs
             }
 
             if ((Path.GetExtension(XLSFileName) ?? "") == ".txt")
-                dtToImport = CFncSave_LoadGridFile.LoadTxtToDataTable(XLSFileName, "<&>");
+                dtToImport = FncSave_LoadGridFile.LoadTxtToDataTable(XLSFileName, "<&>");
             else
                 // dtToImport = FncExcel.ConvertExcelFileToDataTableV5(txt_File.Text, numUD.Value)
-                dtToImport = CFncExcel.ConvertExcelFileToDataTableV5(XLSFileName, 1, 2);
+                dtToImport = FncExcel.ConvertExcelFileToDataTableV5(XLSFileName, 1, 2);
 
             if (dtToImport.Columns.Count == 1 & (Separator != null | !string.IsNullOrEmpty(Separator)))
                 // มี Col เดียว เพราะเพิ่ง Qry มาจาก AS400 ใหม่ๆ หรือ เป็น DT มาจากไฟล์ W Excel ที่ยังไม่ TextToCol 
-                dtToImport = CFncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
+                dtToImport = FncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = CFncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
-                PathSaveFile = CFncFileFolder.NewFileNameUnique(PathSaveFile);
-                CFncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
+                PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
+                FncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
             }
             // ###################
             // ###############################################
@@ -676,7 +681,7 @@ namespace KengsLibraryCs
             }
 
             // ###############################################
-            var SqlServer = new ClsMsSql(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
+            var SqlServer = new MsSql_Manager(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
                                                                   // ## นำ ข้อมูล As400 เข้า DataBase
                                                                   // สร้างคำสั่งสร้างตารางสำหรับ นำ ไฟล์ As400 เข้า DataBase
             string Imp_TableName = ToTableName;
@@ -727,7 +732,7 @@ namespace KengsLibraryCs
     /// <remarks>
     /// 591102 เพิ่ม  AliasViewName
     /// </remarks>
-        public static string CreateTempTableByTable(ClsMsSql CSql, string tbName, string AliasViewName = null)
+        public static string CreateTempTableByTable(MsSql_Manager CSql, string tbName, string AliasViewName = null)
         {
             string TempTbName = tbName;
             if (AliasViewName != null | AliasViewName != "")

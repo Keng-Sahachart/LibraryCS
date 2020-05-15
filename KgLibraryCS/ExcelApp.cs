@@ -5,12 +5,12 @@ using EXCEL = Microsoft.Office.Interop.Excel;
 using Microsoft.VisualBasic.CompilerServices;
 using System.Collections;
 using System.Collections.Generic;
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     /// <summary>
     /// สร้างตัวแปร เพื่อ การปิด Process เมื่อใช้เสร็จ เพราะ ปิดแบบปกติไม่ได้
     /// </summary>
-    public class ClsExcelApp
+    public class ExcelApp
     {
         public EXCEL.Application App = new EXCEL.Application();
 
@@ -19,7 +19,7 @@ namespace KengsLibraryCs
         private int ProcIdXL = 0;
         private Process xproc;
 
-        public ClsExcelApp()
+        public ExcelApp()
         {
 
             // XlsApp.Workbooks.Add()
@@ -28,12 +28,12 @@ namespace KengsLibraryCs
             // ตรวจจับ Process ID ของ App เพื่อ จะได้ปิด Process ได้ถูก เมื่อ ฟังก์ชั่นนี้ ทำงานเสร็จ
             xlHWND = App.Hwnd; // xlAppObj.Hwnd
 
-            CFncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
+            FncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
             // Dim xproc As Process = Process.GetProcessById(ProcIdXL)
             xproc = Process.GetProcessById(ProcIdXL);
         }
 
-        public ClsExcelApp(ref EXCEL.Application AppXls) // สำหรับ อ้างอิง App ที่มีอยู่แล้ว
+        public ExcelApp(ref EXCEL.Application AppXls) // สำหรับ อ้างอิง App ที่มีอยู่แล้ว
         {
             // XlsApp.Workbooks.Add()
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
@@ -150,7 +150,7 @@ namespace KengsLibraryCs
 
             string FileNameSaveFull;
             FileNameSaveFull = FilePathToSaveWithOutExt + "." + FileFormat;
-            FileNameSaveFull = CFncFileFolder.NewFileNameUnique(FileNameSaveFull); // สร้างชื่อไฟล์ใหม่ หาก มีไฟล์ชื่อเดิมอยู่แล้ว
+            FileNameSaveFull = FncFileFolder.NewFileNameUnique(FileNameSaveFull); // สร้างชื่อไฟล์ใหม่ หาก มีไฟล์ชื่อเดิมอยู่แล้ว
 
             App.ActiveWorkbook.SaveAs(FileNameSaveFull, EnumFileFormat);
             return FileNameSaveFull;

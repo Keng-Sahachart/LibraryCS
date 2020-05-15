@@ -3,9 +3,9 @@ using System;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncDateTime
+    public static class FncDateTime
     {
 
         /// <summary> เดือน ชื่อไทย ย่อหรือ เต็ม </summary>

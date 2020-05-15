@@ -11,9 +11,9 @@ using Microsoft.VisualBasic;
 
 using System.Text.RegularExpressions;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    class CFncArray
+    class FncArray
     {
 
         #region Convert Array to Any

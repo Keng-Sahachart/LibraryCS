@@ -8,10 +8,12 @@
     <ProjectGuid>{9A9723BB-280F-4671-9EF7-979CB9F45DD7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KengsClassLibraryV2</RootNamespace>
-    <AssemblyName>KengsLibraryCs</AssemblyName>
+    <RootNamespace>kgLibraryCs</RootNamespace>
+    <AssemblyName>kgLibraryCs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -43,6 +46,12 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="sapnco">
+      <HintPath>..\..\ClassLibrary_Keng\ClassLibrary_Keng\SAP DLL\sapnco.dll</HintPath>
+    </Reference>
+    <Reference Include="sapnco_utils">
+      <HintPath>..\..\ClassLibrary_Keng\ClassLibrary_Keng\SAP DLL\sapnco_utils.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -62,45 +71,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CAutoClosingMessageBox.cs" />
-    <Compile Include="CFncArray.cs" />
-    <Compile Include="CFncString.cs" />
+    <Compile Include="AutoClosingMessageBox.cs" />
+    <Compile Include="Function\FncArray.cs" />
+    <Compile Include="Function\FncString.cs" />
     <Compile Include="ClsAS400FileData.cs" />
     <Compile Include="ClsAutoCompleteManager.cs" />
-    <Compile Include="ClsMsSql.cs" />
+    <Compile Include="MsSql_Manager.cs" />
     <Compile Include="ClsTabManager.cs" />
-    <Compile Include="CFncMdiForm.cs" />
-    <Compile Include="CFncNumber.cs" />
-    <Compile Include="CFncProcessManager.cs" />
-    <Compile Include="CFncRadioButton.cs" />
-    <Compile Include="CFncREGEX.cs" />
-    <Compile Include="CFncRegistry.cs" />
-    <Compile Include="CFncSave_LoadGridFile.cs" />
-    <Compile Include="CFncTextBox.cs" />
-    <Compile Include="CFncTextFile.cs" />
-    <Compile Include="CFncTreeView.cs" />
+    <Compile Include="Function\FncMdiForm.cs" />
+    <Compile Include="Function\FncNumber.cs" />
+    <Compile Include="Function\FncProcessManager.cs" />
+    <Compile Include="Function\FncRadioButton.cs" />
+    <Compile Include="Function\FncREGEX.cs" />
+    <Compile Include="Function\FncRegistry.cs" />
+    <Compile Include="Function\FncSave_LoadGridFile.cs" />
+    <Compile Include="Function\FncTextBox.cs" />
+    <Compile Include="Function\FncTextFile.cs" />
+    <Compile Include="Function\FncTreeView.cs" />
+    <Compile Include="SAP\IRfcTableExtentions.cs" />
+    <Compile Include="SAP\sapRfcFunctionModule.cs" />
     <Content Include="CustomizeControl\CtrlDataGridView_SkipColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CFncComboBox.cs" />
-    <Content Include="CFncDataGrid.cs" />
-    <Compile Include="CFncDataTable.cs" />
-    <Compile Include="CFncDateTime.cs" />
-    <Compile Include="ClsExcelApp.cs" />
+    <Compile Include="Function\FncComboBox.cs" />
+    <Content Include="Function\FncDataGrid.cs" />
+    <Compile Include="Function\FncDataTable.cs" />
+    <Compile Include="Function\FncDateTime.cs" />
+    <Compile Include="ExcelApp.cs" />
     <Content Include="ClsExcelInteriorColor.cs" />
     <Compile Include="ClsCheckAllDataGridview.cs" />
     <Compile Include="ClsAppConfig.cs" />
-    <Compile Include="CFncAS400.cs" />
-    <Compile Include="CFncControl.cs" />
-    <Compile Include="CFncGeneral.cs" />
-    <Compile Include="ClsReverseIterator.cs" />
+    <Compile Include="Function\FncAS400.cs" />
+    <Compile Include="Function\FncControl.cs" />
+    <Compile Include="Function\FncGeneral.cs" />
+    <Compile Include="ReverseIterator.cs" />
     <Compile Include="ClsUpdateTableByDataGridView.cs" />
-    <Compile Include="CFncDataBaseTool.cs" />
-    <Compile Include="CFncEntityFramework.cs" />
-    <Compile Include="CFncExcel.cs" />
-    <Compile Include="CFncFileFolder.cs" />
+    <Compile Include="Function\FncDataBaseTool.cs" />
+    <Compile Include="Function\FncEntityFramework.cs" />
+    <Compile Include="Function\FncExcel.cs" />
+    <Compile Include="Function\FncFileFolder.cs" />
     <Content Include="CustomizeControl\CtrlGroupBox_BorderColor.cs" />
     <Content Include="CustomizeControl\CtrlImageToolTip.cs" />
     <Content Include="CustomizeControl\CtrlTreeViewAdvance.cs" />
@@ -110,6 +121,9 @@
     <None Include="MacroLib.xlsm">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Class\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

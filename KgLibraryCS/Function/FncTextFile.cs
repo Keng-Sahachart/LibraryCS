@@ -6,9 +6,9 @@ using System.IO;
 //using Microsoft.VisualBasic;
 //using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncTextFile
+    public static class FncTextFile
     {
         /// <summary>
     /// อ่านไฟล์ ออกมาเป็น String 

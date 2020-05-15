@@ -13,7 +13,7 @@ using Microsoft.Vbe;//.VBIDE;
 using Microsoft.Vbe.Interop;
 
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     //  ExcelTools = Microsoft.Office.Tools.Excel
     //  ExcelTools9 = Microsoft.Office.Tools.Excel.v9.0
@@ -28,7 +28,7 @@ namespace KengsLibraryCs
     // การเรียก Range หรือ  Cell
     // wSheet.Cells(10, "A")
 
-    public static class CFncExcel
+    public static class FncExcel
     {
 
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -206,7 +206,7 @@ namespace KengsLibraryCs
                 FileNameSaveFull = FilePathToSaveWithOutExt + "." + FileFormat;
             }
 
-            FileNameSaveFull = CFncFileFolder.NewFileNameUnique(FileNameSaveFull);//สร้างชื่อไฟล์ใหม่ หาก มีไฟล์ชื่อเดิมอยู่แล้ว
+            FileNameSaveFull = FncFileFolder.NewFileNameUnique(FileNameSaveFull);//สร้างชื่อไฟล์ใหม่ หาก มีไฟล์ชื่อเดิมอยู่แล้ว
 
             XlApp.DisplayAlerts = false;
             XlApp.ActiveWorkbook.SaveAs(FileNameSaveFull, EnumFileFormat);
@@ -223,7 +223,7 @@ namespace KengsLibraryCs
 
             string FileNameSaveFull;
             FileNameSaveFull = FilePathToSaveWithOutExt + "." + FileFormat;
-            FileNameSaveFull = CFncFileFolder.NewFileNameUnique(FileNameSaveFull); // สร้างชื่อไฟล์ใหม่ หาก มีไฟล์ชื่อเดิมอยู่แล้ว
+            FileNameSaveFull = FncFileFolder.NewFileNameUnique(FileNameSaveFull); // สร้างชื่อไฟล์ใหม่ หาก มีไฟล์ชื่อเดิมอยู่แล้ว
 
             if (XlsVer == 11)
                 xlApp.ActiveWorkbook.SaveAs(FileNameSaveFull, 43);
@@ -1148,7 +1148,7 @@ namespace KengsLibraryCs
             // ตรวจจับ Process ID ของ App เพื่อ จะได้ปิด Process ได้ถูก เมื่อ ฟังก์ชั่นนี้ ทำงานเสร็จ
             int xlHWND = Conversions.ToInteger(xlAppObj.Hwnd);
             int ProcIdXL = 0;
-            CFncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
+            FncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
             var xproc = Process.GetProcessById(ProcIdXL);
 
             // ###########################################################
@@ -1275,7 +1275,7 @@ namespace KengsLibraryCs
             // ตรวจจับ Process ID ของ App เพื่อ จะได้ปิด Process ได้ถูก เมื่อ ฟังก์ชั่นนี้ ทำงานเสร็จ
             int xlHWND = Conversions.ToInteger(xlAppObj.Hwnd);
             int ProcIdXL = 0;
-            CFncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
+            FncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
             var xproc = Process.GetProcessById(ProcIdXL);
 
             // ###########################################################
@@ -1563,15 +1563,15 @@ namespace KengsLibraryCs
             if (ShiftDownByCopy == false)
             {
                 wSheet.get_Range(RngInsert).Select();
-               // ClsReverseIterator RowList = new ClsReverseIterator(
-                foreach (DataRow dRow in new ClsReverseIterator(DataTable.Rows))
+               // ReverseIterator RowList = new ReverseIterator(
+                foreach (DataRow dRow in new ReverseIterator(DataTable.Rows))
                 {
                     wSheet.get_Range(RngInsert).Insert(Shift: Excel.XlDirection.xlDown);
                     wSheet.get_Range(RngInsert).Value = dRow.ItemArray;
                 }
             }
             else
-                foreach (DataRow dRow in new ClsReverseIterator(DataTable.Rows))
+                foreach (DataRow dRow in new ReverseIterator(DataTable.Rows))
                 {
                     wSheet.get_Range(RngInsert).Select();
                     wSheet.get_Range(RngInsert).Copy();

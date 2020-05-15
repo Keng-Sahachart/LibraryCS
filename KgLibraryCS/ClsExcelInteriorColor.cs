@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     /// <summary>
     /// Class ที่เก็บสีของ Excel 56 สี ที่เป็น Parameter Interior Color ของ Excel 2003 ขึ้นไป

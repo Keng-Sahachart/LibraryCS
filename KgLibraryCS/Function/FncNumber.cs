@@ -3,9 +3,9 @@ using System;
 using Microsoft.VisualBasic.CompilerServices;
 
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public class CFncNumber
+    public class FncNumber
     {
 
         /// <summary>

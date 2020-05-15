@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncREGEX
+    public static class FncREGEX
     {
         /// <summary>
     /// เอา DataValue ของ TagName ออกมาจาก ValueTag

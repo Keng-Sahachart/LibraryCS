@@ -6,7 +6,7 @@ using System.Text;
 using System.Windows.Forms;
 // ยังไม่เสร็จ 
 // ยังใช้ไม่ได้
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     public class ClsAutoCompleteManager
     {

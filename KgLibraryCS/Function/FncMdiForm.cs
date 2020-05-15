@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncMdiForm
+    public static class FncMdiForm
     {
         // ###############################################################
         /// <summary>

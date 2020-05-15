@@ -4,9 +4,9 @@ using System.Collections;
 using System;
 using System.ComponentModel;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncEntityFramework
+    public static class FncEntityFramework
     {
         /// <summary>
     /// แปลง .ToList จาก Entity Framework ให้เป็น DataTable / อาจจะช้าเพราะ วนลูป Row, Column

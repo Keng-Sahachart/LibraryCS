@@ -12,7 +12,7 @@ using System.IO;
 using System.Threading;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
 
     // ###########################################################################
@@ -20,13 +20,13 @@ namespace KengsLibraryCs
     // ###########################################################################
     // 
 
-    public static class CFncAS400
+    public static class FncAS400
     {
         private const string AS400_ServerIP = "192.10.10.10";
         private const string AS400_Library = "QS36F";
         private const string AS400_User = "ALL"; // ใช้ ALL ปลอยภัยกว่า '"pcs"
         private const string AS400_Password = "A550555"; // "pcssap"
-                                                         // Const HostCheckMember = "172.28.2.125" 'เครื่อง คุณ Turbo
+        // Const HostCheckMember = "172.28.2.125" 'เครื่อง คุณ Turbo
 
         public const string AS400_P7_ServerIP = "172.29.9.100";
 
@@ -46,9 +46,9 @@ namespace KengsLibraryCs
             AS400Connection.Open();
             var Adapter = new OleDbDataAdapter(Sql, AS400Connection);
             Adapter.Fill(dt); // (DataSet)
-                              // Catch ex As Exception
-                              // MsgBox(ex.Message)
-                              // Finally
+            // Catch ex As Exception
+            // MsgBox(ex.Message)
+            // Finally
             AS400Connection.Close();
             // End Try
             return dt;
@@ -288,9 +288,9 @@ namespace KengsLibraryCs
         }
 
         /// <summary>เช็คไฟล์จาก AS400 ว่ามีหรือไม่ โดยควบคุม Label ที่ใช้แสดงผล และแสดงสถานะ "พร้อม" หรือ "ไม่พร้อม" เป็นสี</summary>
-    /// <param name="FileName">ชื่อไฟล์</param>
-    /// <param name="Member">Member ของไฟล์</param>
-    /// <param name="StatusLabel">ลาเบลที่จะให้แสดงผล</param>
+        /// <param name="FileName">ชื่อไฟล์</param>
+        /// <param name="Member">Member ของไฟล์</param>
+        /// <param name="StatusLabel">ลาเบลที่จะให้แสดงผล</param>
         public static void CheckFileExistToLabel(string FileName, string Member, ref Label StatusLabel)
         {
             try
@@ -350,7 +350,7 @@ namespace KengsLibraryCs
             string nThYY;
             nDD = DateRet.Day.ToString("00");
             nMM = DateRet.Month.ToString("00");
-            nThYY = Conversions.ToString(CFncDateTime.ThaiYear(DateRet.Year, true));
+            nThYY = Conversions.ToString(FncDateTime.ThaiYear(DateRet.Year, true));
 
             return "M" + nThYY + nMM + nDD;
         }
@@ -359,9 +359,9 @@ namespace KengsLibraryCs
         // ########################################################################################################################
 
         /// <summary>ดึง FileName จาก AS400 ส่งข้อมูลออกมาเป็น Datatable และสามารเซฟไฟล์เป็น Xls ได้ด้วย (ใช้ OleDB)</summary>
-    /// <param name="FileName">FileName จาก AS400</param>
-    /// <param name="Member">*ออพชั่น Member ที่อยู่ใน FileName *ค่าเดิมเป็น Nothing</param>
-    /// <param name="PathSaveFile">*ออพชั่น กำหนดตำแหน่งไฟล์และชื่อสกุลไฟล์  *ค่าเดิมเป็น Nothing</param>
+        /// <param name="FileName">FileName จาก AS400</param>
+        /// <param name="Member">*ออพชั่น Member ที่อยู่ใน FileName *ค่าเดิมเป็น Nothing</param>
+        /// <param name="PathSaveFile">*ออพชั่น กำหนดตำแหน่งไฟล์และชื่อสกุลไฟล์  *ค่าเดิมเป็น Nothing</param>
         public static DataTable QryAS400ToXls(string FileName, string Member = null, string PathSaveFile = null)
         {
             var dt = new DataTable();
@@ -379,7 +379,7 @@ namespace KengsLibraryCs
                 wBook = xlApp.Workbooks.Add();
                 wSheet = (Excel.Worksheet)wBook.Worksheets[1];
                 // xlApp.Visible = True
-                CFncExcel.DataTableToExcelSheet(ref dt, ref wSheet);
+                FncExcel.DataTableToExcelSheet(ref dt, ref wSheet);
                 wBook.SaveAs(PathSaveFile, Excel.XlFileFormat.xlExcel9795);
                 wBook.Close();
                 xlApp.Quit();
@@ -388,14 +388,14 @@ namespace KengsLibraryCs
             // MsgBox(ex.Message)
             // Finally
             Thread.Sleep(500); // ถ้าไม่มี sleep มันจะใช้ EXCEL ตัวเดิมเปิด ต่อให้ปิดหน้าต่างใหม่  Process ก็ไม่ปิด
-                           
+
             return dt;
         }
 
         /// <summary>ดึง FileName จาก AS400 เซฟไฟล์เป็น Xls (ใช้ ADODB.Recordset)</summary>
-    /// <param name="FileName">FileName จาก AS400</param>
-    /// <param name="MemberName">*ออพชั่น Member ที่อยู่ใน FileName *ค่าเดิมเป็น Nothing</param>
-    /// <param name="PathSaveFileXls">*ออพชั่น กำหนดตำแหน่งไฟล์และชื่อสกุลไฟล์  *ค่าเดิมเป็น Nothing</param>
+        /// <param name="FileName">FileName จาก AS400</param>
+        /// <param name="MemberName">*ออพชั่น Member ที่อยู่ใน FileName *ค่าเดิมเป็น Nothing</param>
+        /// <param name="PathSaveFileXls">*ออพชั่น กำหนดตำแหน่งไฟล์และชื่อสกุลไฟล์  *ค่าเดิมเป็น Nothing</param>
         public static object QryAS400ToXlsByADO(string FileName, string MemberName = null, string PathSaveFileXls = null)
         {
             string ConnStr = "Provider=IBMDA400.DataSource.1;Persist Security Info=False;User ID=" + AS400_User + ";Password=" + AS400_Password + ";Data Source=" + AS400_ServerIP + ";Force Translate=0;Catalog Library List=" + AS400_Library + ";SSL=DEFAULT;";
@@ -428,9 +428,9 @@ namespace KengsLibraryCs
             return 1;
         }
         /// <summary>ดึง FileName จาก AS400 เซฟไฟล์เป็น Xls (ใช้ ADODB.Recordset)</summary>
-    /// <param name="FileName">FileName จาก AS400</param>
-    /// <param name="MemberName">*ออพชั่น Member ที่อยู่ใน FileName *ค่าเดิมเป็น Nothing</param>
-    /// <param name="PathSaveFileXls">*ออพชั่น กำหนดตำแหน่งไฟล์และชื่อสกุลไฟล์  *ค่าเดิมเป็น Nothing *ระบุนามสกุลมาด้วย xls หรือ xlsx</param>
+        /// <param name="FileName">FileName จาก AS400</param>
+        /// <param name="MemberName">*ออพชั่น Member ที่อยู่ใน FileName *ค่าเดิมเป็น Nothing</param>
+        /// <param name="PathSaveFileXls">*ออพชั่น กำหนดตำแหน่งไฟล์และชื่อสกุลไฟล์  *ค่าเดิมเป็น Nothing *ระบุนามสกุลมาด้วย xls หรือ xlsx</param>
         public static object QryAS400ToXlsByADOV2(string FileName, string MemberName = null, string PathSaveFileXls = null)
         {
             // Dim ServerIP = "192.10.10.10", Library = "QS36F", User = "pcs", Password = "pcu8"
@@ -448,7 +448,7 @@ namespace KengsLibraryCs
                 {
                     // เคยเกิดเคส ว่า Already Exsist Alias เลยใส่กันไว้ 620528
                     string sqlDrop = "DROP ALIAS Qtemp.getMember";
-                    AS400Connection.Execute(sqlDrop,out RecordsAffected);
+                    AS400Connection.Execute(sqlDrop, out RecordsAffected);
                 }
                 catch //(Exception ex)
                 {
@@ -482,7 +482,7 @@ namespace KengsLibraryCs
                     XlsRoXlsx = true;
                 else
                     XlsRoXlsx = false;
-                CFncExcel.SaveAsWorkBookByVersion(xlApp, XlsRoXlsx, CFncFileFolder.GetFullPathWithoutExtension(PathSaveFileXls));
+                FncExcel.SaveAsWorkBookByVersion(xlApp, XlsRoXlsx, FncFileFolder.GetFullPathWithoutExtension(PathSaveFileXls));
                 wBook.Close(); // Excel จะปิดตัวเองพร้อมโปรแกรม
                 xlApp.Quit(); // Excel จะปิดตัวเองพร้อมโปรแกรม
             }
@@ -501,17 +501,17 @@ namespace KengsLibraryCs
 
 
         /// <summary>
-    /// นำไฟล์ (DataTable) ที่ดึงออกจาก AS400 ซึ่งมี คอลัมน์ เดียว มาแยกคอลัมน์ และ ทำการ กลับเครื่องหมายติดลบ ที่อยู่ทางขวามือ
-    /// พร้อมกับ บันทึกไฟล์ โดยทำงาน บน Stream
-    /// ทั้งหมด ไม่เพิ่งพา Excel หรือ ดาต้าเบส
-    /// 620514 พบว่า record เป็นแสน ทำให้ช้า ได้พัฒนาเป็น V2 แล้ว
-    /// </summary>
-    /// <param name="DataTableInput">นำเข้าเป็น DataTable</param>
-    /// <param name="Separator">กำหนด ตัวแยกคอลัมน์ ปกติใช้ ~</param>
-    /// <param name="DoTrim">กำหนด การ Trim ซ้าย ขวา</param>
-    /// <param name="DoMinusNeg">ต้องการ ทำการ กลับ -(ลบ) หรือไม่</param>
-    /// <param name="PathSaveFile">กำหนดตำแหน่งบันทึกไฟล์ (ถ้าต้องการ ถ้าไม่ต้องการไม่ต้องกำหนด)</param>
-    /// <returns>ออกเป็น DataTable ถ้าผิดพลาดจะออกเป็นตารางเปล่ว</returns>
+        /// นำไฟล์ (DataTable) ที่ดึงออกจาก AS400 ซึ่งมี คอลัมน์ เดียว มาแยกคอลัมน์ และ ทำการ กลับเครื่องหมายติดลบ ที่อยู่ทางขวามือ
+        /// พร้อมกับ บันทึกไฟล์ โดยทำงาน บน Stream
+        /// ทั้งหมด ไม่เพิ่งพา Excel หรือ ดาต้าเบส
+        /// 620514 พบว่า record เป็นแสน ทำให้ช้า ได้พัฒนาเป็น V2 แล้ว
+        /// </summary>
+        /// <param name="DataTableInput">นำเข้าเป็น DataTable</param>
+        /// <param name="Separator">กำหนด ตัวแยกคอลัมน์ ปกติใช้ ~</param>
+        /// <param name="DoTrim">กำหนด การ Trim ซ้าย ขวา</param>
+        /// <param name="DoMinusNeg">ต้องการ ทำการ กลับ -(ลบ) หรือไม่</param>
+        /// <param name="PathSaveFile">กำหนดตำแหน่งบันทึกไฟล์ (ถ้าต้องการ ถ้าไม่ต้องการไม่ต้องกำหนด)</param>
+        /// <returns>ออกเป็น DataTable ถ้าผิดพลาดจะออกเป็นตารางเปล่ว</returns>
         public static DataTable As400DataTableTextToColumn(ref DataTable DataTableInput, string Separator = "~", bool DoTrim = false, bool DoMinusNeg = false, string PathSaveFile = null)
         {
             var mStrm = new MemoryStream();
@@ -534,8 +534,8 @@ namespace KengsLibraryCs
                     str += lineoftext;
                 }
                 StmW.Flush();  // ทำการ Flush เพื่อ ทำการปิดไฟล์ ถ้าไม่ Flush ประกฏว่า  WriteLine ได้แค่ 400 Line
-                               // StmW.Close()
-                               // End Using
+                // StmW.Close()
+                // End Using
 
                 // ###############################################################
                 // 2. กำหนด จุดเริ่มต้น ในการอ่าน Memory Stream 
@@ -631,20 +631,20 @@ namespace KengsLibraryCs
             }// New DataTable
         }
 
-      
+
 
         /// <summary>
-    /// นำไฟล์ (DataTable) ที่ดึงออกจาก AS400 ซึ่งมี คอลัมน์ เดียว มาแยกคอลัมน์ และ ทำการ กลับเครื่องหมายติดลบ ที่อยู่ทางขวามือ
-    /// พร้อมกับ บันทึกไฟล์ โดยทำงาน บน Stream
-    /// ทั้งหมด ไม่เพิ่งพา Excel หรือ ดาต้าเบส
-    /// 620514 พัฒนาเป็น V2 เพิ่มความเร็ว ไม่ใช้ Memory Stream แล้ว เนื่องจากเมื่อ record มี เป็น แสน Row จะทำให้ช้าอย่างเห็นได้ชัด
-    /// </summary>
-    /// <param name="DataTableInput">นำเข้าเป็น DataTable</param>
-    /// <param name="Separator">กำหนด ตัวแยกคอลัมน์ ปกติใช้ ~</param>
-    /// <param name="DoTrim">กำหนด การ Trim ซ้าย ขวา</param>
-    /// <param name="DoMinusNeg">ต้องการ ทำการ กลับ -(ลบ) หรือไม่</param>
-    /// <param name="PathSaveFile">กำหนดตำแหน่งบันทึกไฟล์ (ถ้าต้องการ ถ้าไม่ต้องการไม่ต้องกำหนด)</param>
-    /// <returns>ออกเป็น DataTable ถ้าผิดพลาดจะออกเป็นตารางเปล่ว</returns>
+        /// นำไฟล์ (DataTable) ที่ดึงออกจาก AS400 ซึ่งมี คอลัมน์ เดียว มาแยกคอลัมน์ และ ทำการ กลับเครื่องหมายติดลบ ที่อยู่ทางขวามือ
+        /// พร้อมกับ บันทึกไฟล์ โดยทำงาน บน Stream
+        /// ทั้งหมด ไม่เพิ่งพา Excel หรือ ดาต้าเบส
+        /// 620514 พัฒนาเป็น V2 เพิ่มความเร็ว ไม่ใช้ Memory Stream แล้ว เนื่องจากเมื่อ record มี เป็น แสน Row จะทำให้ช้าอย่างเห็นได้ชัด
+        /// </summary>
+        /// <param name="DataTableInput">นำเข้าเป็น DataTable</param>
+        /// <param name="Separator">กำหนด ตัวแยกคอลัมน์ ปกติใช้ ~</param>
+        /// <param name="DoTrim">กำหนด การ Trim ซ้าย ขวา</param>
+        /// <param name="DoMinusNeg">ต้องการ ทำการ กลับ -(ลบ) หรือไม่</param>
+        /// <param name="PathSaveFile">กำหนดตำแหน่งบันทึกไฟล์ (ถ้าต้องการ ถ้าไม่ต้องการไม่ต้องกำหนด)</param>
+        /// <returns>ออกเป็น DataTable ถ้าผิดพลาดจะออกเป็นตารางเปล่ว</returns>
         public static DataTable As400DataTableTextToColumnV2(DataTable DataTableInput, string Separator = "~", bool DoTrim = false, bool DoMinusNeg = false, string PathSaveFile = null)
         {
 
@@ -654,8 +654,8 @@ namespace KengsLibraryCs
             for (int nC = 0; nC <= 500; nC++)
                 DtTxt2Col.Columns.Add("Col" + Conversions.ToString(nC));
             int TopCountCol = 0; // เก็บ จำนวนสูงสุด ของ คอลัมน์ เพื่อลบคอลัมน์ ส่วนเกินออก
-                                 // ###############################################################
-                                 // Text To Col พร้อม Negative minus
+            // ###############################################################
+            // Text To Col พร้อม Negative minus
             //string newThisLine = "";
             foreach (DataRow drow in DataTableInput.Rows)
             {
@@ -729,7 +729,7 @@ namespace KengsLibraryCs
 
             string ConnStr = "Provider=IBMDA400.DataSource.1;Persist Security Info=False;User ID=" + AS400_User + ";Password=" + AS400_Password + ";Data Source=" + AS400_ServerIP + ";Force Translate=0;Catalog Library List=" + AS400_Library + ";SSL=DEFAULT;";
 
- 
+
             string sql = "CREATE ALIAS QTEMP.MYMBRB FOR QS36F.WZBMJUM (MBRB)";
 
             // Dim Sql As String = String.Format("SELECT * FROM {0}({1})", FileName, MemberName)
@@ -745,7 +745,7 @@ namespace KengsLibraryCs
             var Adapter = new OleDbDataAdapter(sql, AS400Connection);
             Adapter.Fill(dt); // (DataSet)
             ObjResult = dt;
-            
+
             AS400Connection.Close();
             // End Try
             return ObjResult;
@@ -754,25 +754,26 @@ namespace KengsLibraryCs
 
 
         /// <summary>  Qry ข้อมูลออกมาจาก AS400 => TextToColumn => SaveFile => Import To SQL Server 's Table
-    /// / พร้อม เสริม ฟิลด์ ข้อมูลที่จะใส่เพิ่มไปใน Table
-    /// </summary>
-    /// <param name="FileName">ชื่อไฟล์ใน AS400 ที่ต้องการ</param>
-    /// <param name="Member">Member ของ File AS400</param>
-    /// <param name="Separator">ตัวขั่นคอลัมน์</param>
-    /// <param name="ConnString">Connection String ของ SQL Server ปลายทาง</param>
-    /// <param name="ToTableName">ชื่อตาราง ปลายทาง</param>
-    /// <param name="PathSaveFile">ตำแหน่งเซฟไฟล์ ถ้าต้องการ Backup ให้ใส่ Parameter</param>
-    /// <param name="ArL_AttrNameAndVal">ชื่อ Attribute และ Value ควรประกาศเป็น myArrayList.Add({"AttrName", "AttrVal"}</param>
-    /// <remarks>เรียกใช้ ฟังก์ชั่น สำเร็จรูปอื่นๆ</remarks>
+        /// / พร้อม เสริม ฟิลด์ ข้อมูลที่จะใส่เพิ่มไปใน Table
+        /// </summary>
+        /// <param name="FileName">ชื่อไฟล์ใน AS400 ที่ต้องการ</param>
+        /// <param name="Member">Member ของ File AS400</param>
+        /// <param name="Separator">ตัวขั่นคอลัมน์</param>
+        /// <param name="ConnString">Connection String ของ SQL Server ปลายทาง</param>
+        /// <param name="ToTableName">ชื่อตาราง ปลายทาง</param>
+        /// <param name="PathSaveFile">ตำแหน่งเซฟไฟล์ ถ้าต้องการ Backup ให้ใส่ Parameter</param>
+        /// <param name="ArL_AttrNameAndVal">ชื่อ Attribute และ Value ควรประกาศเป็น myArrayList.Add({"AttrName", "AttrVal"}</param>
+        /// <remarks>เรียกใช้ ฟังก์ชั่น สำเร็จรูปอื่นๆ</remarks>
         public static void ImportQryAS400ToTableDataBase_WithFileAttribute(string FileName, string Member, string Separator
                                                             , string ConnString, string ToTableName
                                                             , string PathSaveFile = null
                                                             , ArrayList ArL_AttrNameAndVal = null
                                                             , bool WantColumnNameTableByDataTable = false
-    )
+                                                            , bool AppendData = false)
         {
             DataTable dtToImport = null;
             string AS400_FileName = FileName;
+
 
             dtToImport = QryAS400ToDatatableV2(AS400_FileName, Member);
             // ###############################################
@@ -783,15 +784,15 @@ namespace KengsLibraryCs
             {
                 // มี Col เดียว เพราะเพิ่ง Qry มาจาก AS400 ใหม่ๆ หรือ เป็น DT มาจากไฟล์ W Excel ที่ยังไม่ TextToCol 
                 dtToImport = As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
-                dtToImport = CFncDataTable.DatatableTrimCell(dtToImport);
+                dtToImport = FncDataTable.DatatableTrimCell(dtToImport);
             }
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = CFncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
-                PathSaveFile = CFncFileFolder.NewFileNameUnique(PathSaveFile);
-                CFncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
+                PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
+                FncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator);
             }
             // ###############################################
             // วนสร้าง Column ที่เป็นของ Attribute
@@ -815,9 +816,9 @@ namespace KengsLibraryCs
 
 
             // ###############################################
-            var SqlServer = new ClsMsSql(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
-                                                                  // ## นำ ข้อมูล As400 เข้า DataBase
-                                                                  // สร้างคำสั่งสร้างตารางสำหรับ นำ ไฟล์ As400 เข้า DataBase
+            var SqlServer = new MsSql_Manager(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
+            // ## นำ ข้อมูล As400 เข้า DataBase
+            // สร้างคำสั่งสร้างตารางสำหรับ นำ ไฟล์ As400 เข้า DataBase
             string Imp_TableName = ToTableName;
 
             string SqlCrtImptTable;
@@ -826,11 +827,16 @@ namespace KengsLibraryCs
             else
                 SqlCrtImptTable = FncDataBaseTool.GenCreateTableImport(Imp_TableName, dtToImport.Columns.Count);
 
-            // สร้างตาราง ตรวจสอบว่ามีตารางหรือไม่แล้ว ถ้ามีให้ลบก่อนสร้าง
-            if (SqlServer.TableExists(Imp_TableName))
-                SqlServer.DeleteTable(Imp_TableName);
-            SqlServer.ExecuteNonQuery(SqlCrtImptTable);
-
+        
+            if (AppendData == false)
+            {  
+                // สร้างตาราง ตรวจสอบว่ามีตารางหรือไม่แล้ว ถ้ามีให้ลบก่อนสร้าง
+                if (SqlServer.TableExists(Imp_TableName))
+                {
+                    SqlServer.DeleteTable(Imp_TableName);
+                }
+                SqlServer.ExecuteNonQuery(SqlCrtImptTable);
+            }
             // ###################
             SqlServer.CopyDatatableToDatabaseTable(dtToImport, Imp_TableName);
 

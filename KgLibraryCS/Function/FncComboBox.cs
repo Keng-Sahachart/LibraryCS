@@ -1,9 +1,9 @@
 ﻿using System.Data;
 using System.Windows.Forms;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncComboBox
+    public static class FncComboBox
     {
         /// <summary>ค้นหา Index ของ Item / ใน กรณีที่ ComboBox ทำ DataSource ด้วย DataTable
         /// ค้นหาโดยการ นำ Item ที่เป็น DataRow ออกมาวนลูปค้นหา ข้อมูลใน Column </summary>

@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using Microsoft.VisualBasic.CompilerServices;
 using Excel = Microsoft.Office.Interop.Excel;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncProcessManager
+    public static class FncProcessManager
     {
         [DllImport("user32.dll"
         , CharSet = CharSet.Auto)]

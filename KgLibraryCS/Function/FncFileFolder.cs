@@ -5,9 +5,9 @@ using System.IO;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.CompilerServices;
 
-//namespace KengsLibraryCs
-//{
-    public class CFncFileFolder
+namespace kgLibraryCs
+{
+    public class FncFileFolder
     {
         // #######################################################################################
         // #########  เกี่ยวกับ ไฟล์ โฟลเดอร์      ##########################################################
@@ -223,4 +223,4 @@ using Microsoft.VisualBasic.CompilerServices;
         return fInfo.LastAccessTime;
     }
 }
-//}
+}

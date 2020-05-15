@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     public static class FncDataGrid
     {

@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncRadioButton
+    public static class FncRadioButton
     {
 
         /// <summary>

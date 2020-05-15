@@ -6,15 +6,15 @@
 /// </summary>
 using System.Collections;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public class ClsReverseIterator : IEnumerable
+    public class ReverseIterator : IEnumerable
     {
 
         // a low-overhead ArrayList to store references
         private ArrayList items = new ArrayList();
 
-        public ClsReverseIterator(IEnumerable collection)
+        public ReverseIterator(IEnumerable collection)
         {
             // load all the items in the ArrayList, but in reverse order
             foreach (object o in collection)
@@ -35,7 +35,7 @@ namespace KengsLibraryCs
 // Dim arr() As Integer = {1, 2, 3, 4, 5}
 // Dim i As Integer
 // ' visit array elements in reverse order
-// For Each i In New ClsReverseIterator(arr)
+// For Each i In New ReverseIterator(arr)
 // Console.WriteLine(i)
 // Next
 // ######################################################################

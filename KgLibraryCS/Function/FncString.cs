@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public class CFncString
+    public class FncString
     {
         public static string Left(string Str, int length)
         {

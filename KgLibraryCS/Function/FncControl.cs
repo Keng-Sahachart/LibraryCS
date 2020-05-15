@@ -3,9 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncControl
+    public static class FncControl
     {
 
         /// <summary>

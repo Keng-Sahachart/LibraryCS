@@ -10,15 +10,15 @@ using System.Windows.Forms;
 //    // do something
 //}
 //...
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public class CAutoClosingMessageBox
+    public class AutoClosingMessageBox
     {
         System.Threading.Timer _timeoutTimer;
         string _caption;
         DialogResult _result;
         DialogResult _timerResult;
-        CAutoClosingMessageBox(string text, string caption, int timeout_ms, MessageBoxButtons buttons = MessageBoxButtons.OK, DialogResult timerResult = DialogResult.None)
+        AutoClosingMessageBox(string text, string caption, int timeout_ms, MessageBoxButtons buttons = MessageBoxButtons.OK, DialogResult timerResult = DialogResult.None)
         {
             _caption = caption;
             _timeoutTimer = new System.Threading.Timer(OnTimerElapsed,
@@ -38,7 +38,7 @@ namespace KengsLibraryCs
         /// <returns></returns>
         public static DialogResult Show(string text, string caption, int timeout_ms, MessageBoxButtons buttons = MessageBoxButtons.OK, DialogResult timerResult = DialogResult.None)
         {
-            return new CAutoClosingMessageBox(text, caption, timeout_ms, buttons, timerResult)._result;
+            return new AutoClosingMessageBox(text, caption, timeout_ms, buttons, timerResult)._result;
         }
 
         void OnTimerElapsed(object state)

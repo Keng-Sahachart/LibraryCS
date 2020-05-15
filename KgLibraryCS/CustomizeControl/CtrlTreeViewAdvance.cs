@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
 
     // Customize เพิ่มเติม

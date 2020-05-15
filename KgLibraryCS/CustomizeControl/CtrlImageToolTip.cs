@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     /// <summary>
     /// Class ที่ พัฒนาจาก ToolTip ที่เป็น Text เพื่อให้แสดงเป็น Image ได้

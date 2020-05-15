@@ -2,7 +2,7 @@
 using System.Drawing;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     public class CtrlGroupBox_BorderColor : GroupBox
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Win32;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncRegistry
+    public static class FncRegistry
     {
         public static string  GetRegisterByPath(string PathVal,string ValueName )
         {

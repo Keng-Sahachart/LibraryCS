@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncTreeView
+    public static class FncTreeView
     {
         /// <summary>
         /// ใช้ดึง Node ทั้งหมดที่อยู่ใน Path ของ Node ที่จะดู --> ตั้งแต่ Node ที่ใส่มา ไต่ Lv ปัจจุบัน ขึ้นไปหา Lv บนสุด

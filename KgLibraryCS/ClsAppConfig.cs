@@ -17,7 +17,7 @@ using System.Configuration;
     // ในแท็ก AppSetting
     // TextBox1.Text = ConfigurationManager.AppSettings("SQLconnection")
     // ####################################################################
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
     public class ClsAppConfig
     {

@@ -7,10 +7,10 @@ using System.Data.SqlClient;
 using Microsoft.VisualBasic;
 using System.Windows.Forms;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
 
-    public class ClsMsSql
+    public class MsSql_Manager
     {
 
         public string ConnectionString { set; get; }
@@ -20,12 +20,12 @@ namespace KengsLibraryCs
         //################################################################
         #region ***Class Constructor
 
-        public ClsMsSql(SqlConnection SqlConn) { Connection = SqlConn; }
-        public ClsMsSql() { ; }
+        public MsSql_Manager(SqlConnection SqlConn) { Connection = SqlConn; }
+        public MsSql_Manager() { ; }
 
-        public ClsMsSql(string myConnectString) {  SetConnectionString(myConnectString); }
+        public MsSql_Manager(string myConnectString) {  SetConnectionString(myConnectString); }
 
-        public ClsMsSql(String Host, String UserName, String Password, String DataBaseName)
+        public MsSql_Manager(String Host, String UserName, String Password, String DataBaseName)
         {
             ConnectionString = "Data Source={0};Initial Catalog={1};Persist Security Info=True;User ID={2};Password={3};Network Library=DBMSSOCN;MultipleActiveResultSets=true";
             ConnectionString = String.Format(ConnectionString, Host, DataBaseName, UserName, Password);

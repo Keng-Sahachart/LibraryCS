@@ -5,7 +5,7 @@
 ####################################################################################################################*/
 using System.Windows.Forms;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
 
     // DataGridView

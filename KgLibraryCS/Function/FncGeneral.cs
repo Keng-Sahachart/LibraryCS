@@ -5,9 +5,9 @@ using System.Windows.Forms;
 using System.Drawing;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public class CFncGeneral
+    public class FncGeneral
     {
 
 

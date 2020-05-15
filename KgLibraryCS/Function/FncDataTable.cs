@@ -6,9 +6,9 @@ using System;
 using System.IO;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncDataTable
+    public static class FncDataTable
     {
 
         /// <summary>

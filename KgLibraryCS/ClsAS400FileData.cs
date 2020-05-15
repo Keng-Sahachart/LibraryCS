@@ -4,17 +4,17 @@ using System.Xml;
 using System.Net;
 using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.VisualBasic.Devices;
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
 
     /// <summary>
     /// สำหรับ เช็คข้อมูลของไฟล์ จาก AS400
     /// สามารถ เรียกใช้ได้เลย ไม่ต้องประกาศตัว แปร Class ก็ได้
-    /// เช่น ClsAS400FileData.GetMember("XXXXX")
+    /// เช่น FileWDataAS400.GetMember("XXXXX")
     /// โครงสร้างของ TAG XML เป็นไปตาม ที่คุณ Turbo กำหนดไว้
     /// </summary>
     /// <remarks></remarks>
-    public class ClsAS400FileData
+    public class FileWDataAS400
     {
 
         // ตัวแปร ข้อมูลที่รับได้ จากไฟล์
@@ -35,12 +35,12 @@ namespace KengsLibraryCs
         private const string HostChkMem = "172.28.1.30";
         private string UrlChkMem = "http://" + HostChkMem + ":9080/ComputerMedline/rest/Getmember?filename=";
 
-        public ClsAS400FileData(string iFileName)
+        public FileWDataAS400(string iFileName)
         {
             GetDataFromAS400(iFileName);
         }
 
-        ClsAS400FileData()
+        FileWDataAS400()
         {
         }
 
@@ -98,14 +98,14 @@ namespace KengsLibraryCs
         /// <summary>
     /// ดึงค่า Member
     /// *ตัวอย่าง การใช้งาน ==>
-    /// IsNothing_(ClsAS400FileData.GetMember(txt_Trnfr_FileName01.Text), MemberDate)
+    /// IsNothing_(FileWDataAS400.GetMember(txt_Trnfr_FileName01.Text), MemberDate)
     /// </summary>
     /// <param name="iFileName">ชื่อไฟล์ W</param>
     /// <returns>รับค่าออกมาเป็น Member ของไฟล์ W</returns>
     /// <remarks></remarks>
         public static string GetMember(string iFileName)
         {
-            var ClsMe = new ClsAS400FileData(); // = Nothing
+            var ClsMe = new FileWDataAS400(); // = Nothing
             if (Strings.Len(iFileName) < 1)
                 return null;
             iFileName = iFileName.ToUpper();

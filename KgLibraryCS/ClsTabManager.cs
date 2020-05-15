@@ -19,23 +19,23 @@ using System.Windows.Forms;
 #### วิธีใช้: ประกาศ คลาส ไว้เป็น ตัวแปร Global
 #### Credit: http://stackoverflow.com/questions/18058034/hiding-and-showing-tabpages-in-vb-net-tabmanager
 ########################################################
-dim clsTabManager as new ClsTabManager 'ตัวแปร Global
+dim TabManager as new TabManager 'ตัวแปร Global
 
 -->Hiding a tabpage:
-clsTabManager.SetInvisible(tabPage)
+TabManager.SetInvisible(tabPage)
 
 -->Showing a tabpage (call from any class/form):
-clsTabManager.SetVisible(FormWithTabControl.tabPage, FormWithTabControl.TabControl)
+TabManager.SetVisible(FormWithTabControl.tabPage, FormWithTabControl.TabControl)
 
 -->Showing a tabpage (call from Form where TabControl resides):
-clsTabManager.SetVisible(tabPage, TabControl)
+TabManager.SetVisible(tabPage, TabControl)
 
 */
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
 
-    public class ClsTabManager
+    public class TabManager
     {
         private struct TabPageData
         {

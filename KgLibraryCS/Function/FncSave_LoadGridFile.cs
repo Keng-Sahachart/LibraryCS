@@ -8,9 +8,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace KengsLibraryCs
+namespace kgLibraryCs
 {
-    public static class CFncSave_LoadGridFile
+    public static class FncSave_LoadGridFile
     {
         // Dim ThisFilename As String = Application.StartupPath & "\MyData.dat"
         /// <summary>
