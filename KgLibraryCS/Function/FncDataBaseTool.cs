@@ -738,7 +738,8 @@ namespace kgLibraryCs
             if (AliasViewName != null | AliasViewName != "")
                 TempTbName = AliasViewName;
 
-            string TempTable = string.Format("Temp_{0}", TempTbName);
+            //string TempTable = string.Format("Temp_{0}", TempTbName);
+            string TempTable = string.Format("{0}", TempTbName);
             if (CSql.TableExists(TempTable))
                 CSql.DeleteTable(TempTable);
 
