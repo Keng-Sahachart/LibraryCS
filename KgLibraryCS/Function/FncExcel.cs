@@ -1148,7 +1148,7 @@ namespace kgLibraryCs
             // ตรวจจับ Process ID ของ App เพื่อ จะได้ปิด Process ได้ถูก เมื่อ ฟังก์ชั่นนี้ ทำงานเสร็จ
             int xlHWND = Conversions.ToInteger(xlAppObj.Hwnd);
             int ProcIdXL = 0;
-            FncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
+            fncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
             var xproc = Process.GetProcessById(ProcIdXL);
 
             // ###########################################################
@@ -1275,7 +1275,7 @@ namespace kgLibraryCs
             // ตรวจจับ Process ID ของ App เพื่อ จะได้ปิด Process ได้ถูก เมื่อ ฟังก์ชั่นนี้ ทำงานเสร็จ
             int xlHWND = Conversions.ToInteger(xlAppObj.Hwnd);
             int ProcIdXL = 0;
-            FncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
+            fncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
             var xproc = Process.GetProcessById(ProcIdXL);
 
             // ###########################################################

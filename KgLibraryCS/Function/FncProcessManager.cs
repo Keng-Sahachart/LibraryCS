@@ -7,7 +7,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace kgLibraryCs
 {
-    public static class FncProcessManager
+    public static class fncProcessManager
     {
         [DllImport("user32.dll"
         , CharSet = CharSet.Auto)]
@@ -61,7 +61,7 @@ namespace kgLibraryCs
 
         /// <summary>ปิด Process ที่มีสถานะค้าง หรือไม่ได้ใช้งาน </summary>
     /// <param name="ProcessName"></param>
-        public static void KillRemainProcess(string ProcessName)   // ควรใช้ตอนเสร็จกระบวนการแล้วเท่านั้น อาจจะไปปิดโปรเซสที่รอการทำงานอยู่ 
+        public static void killRemainProcess(string ProcessName)   // ควรใช้ตอนเสร็จกระบวนการแล้วเท่านั้น อาจจะไปปิดโปรเซสที่รอการทำงานอยู่ 
         {
             try
             {

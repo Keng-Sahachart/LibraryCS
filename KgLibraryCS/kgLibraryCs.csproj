@@ -18,7 +18,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -74,10 +74,10 @@
     <Compile Include="AutoClosingMessageBox.cs" />
     <Compile Include="Function\FncArray.cs" />
     <Compile Include="Function\FncString.cs" />
-    <Compile Include="ClsAS400FileData.cs" />
+    <Compile Include="FileWDataAS400.cs" />
     <Compile Include="ClsAutoCompleteManager.cs" />
     <Compile Include="MsSql_Manager.cs" />
-    <Compile Include="ClsTabManager.cs" />
+    <Compile Include="TabManager.cs" />
     <Compile Include="Function\FncMdiForm.cs" />
     <Compile Include="Function\FncNumber.cs" />
     <Compile Include="Function\FncProcessManager.cs" />

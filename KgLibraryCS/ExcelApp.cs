@@ -28,7 +28,7 @@ namespace kgLibraryCs
             // ตรวจจับ Process ID ของ App เพื่อ จะได้ปิด Process ได้ถูก เมื่อ ฟังก์ชั่นนี้ ทำงานเสร็จ
             xlHWND = App.Hwnd; // xlAppObj.Hwnd
 
-            FncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
+            fncProcessManager.GetWindowThreadProcessId((IntPtr)xlHWND, ref ProcIdXL);
             // Dim xproc As Process = Process.GetProcessById(ProcIdXL)
             xproc = Process.GetProcessById(ProcIdXL);
         }

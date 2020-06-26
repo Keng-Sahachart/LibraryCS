@@ -403,7 +403,7 @@ namespace kgLibraryCs
             }
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncDataTable.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
                 PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
@@ -488,7 +488,7 @@ namespace kgLibraryCs
             }
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncDataTable.Trim_DataTable(dtToImport);
 
             // เพิ่ม Column Data ก่อน Import หรือ เซฟไฟล์ Text
             int Pos = 0;
@@ -581,7 +581,7 @@ namespace kgLibraryCs
                 dtToImport = FncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncDataTable.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
                 PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
@@ -654,7 +654,7 @@ namespace kgLibraryCs
                 dtToImport = FncAS400.As400DataTableTextToColumn(ref dtToImport, Separator, true, true);
             else
                 // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
-                dtToImport = FncSave_LoadGridFile.Trim_DataTable(dtToImport);
+                dtToImport = FncDataTable.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
                 PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);

@@ -137,23 +137,7 @@ namespace kgLibraryCs
         }
 
 
-        public static DataTable Trim_DataTable(DataTable dt)
-        {
-            foreach (DataRow Row in dt.Rows)
-            {
-                foreach (DataColumn Col in dt.Columns)
-                {
-                    if (Col.DataType == Type.GetType("System.String"))
-                    {
-                        if (Information.IsDBNull(Row[Col.ColumnName]))
-                            Row[Col.ColumnName] = "";
-                        else
-                            Row[Col.ColumnName] = Row[Col.ColumnName].ToString().Trim();
-                    }
-                }
-            }
-            return dt;
-        }
+      
 
 
         public static object Trim_DataTableAndCleanSpecialChar_DataTable(DataTable dt, bool WantTrim = true, bool WantClean = true)
