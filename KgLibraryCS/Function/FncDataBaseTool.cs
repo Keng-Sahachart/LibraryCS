@@ -5,6 +5,7 @@ using System;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
+using System.Collections.Generic;
 
 namespace kgLibraryCs
 {
@@ -703,6 +704,103 @@ namespace kgLibraryCs
             // MsgBox("บันทึกไฟล์เข้าฐานข้อมูลแล้ว")
             Interaction.Beep();
         }
+
+        public static void ImportXLSFileToTableDataBase_WithAttributeV3_SeparatorS(string XLSFileName
+                                                   , string[] Separator
+                                                   , string ConnString
+                                                   , string ToTableName
+                                                   , string PathSaveFile = null
+                                                   , Dictionary<string, string> Dct_AttrNameAndVal = null
+                                                   , bool WantColumnNameTableByDataTable = false
+                                                   , int SheetNumber = 1)
+        {
+            DataTable dtToImport = null/* TODO Change to default(_) if this is not a reference type */;
+
+            for (int nSep = 0; nSep <= Information.UBound(Separator); nSep++)
+            {
+
+                // 590711 เพิ่ม การใช้ อักขรพิเศษ จะเพิ่ม เท่าที่เจอ หรือ เท่าที่เพิ่มได้
+                if (Strings.Left(Separator[nSep], 2) == "[#" & Strings.Right(Separator[nSep], 2) == "#]")
+                {
+                    switch (Strings.Mid(Separator[nSep], 3, Strings.Len(Separator) - 4))
+                    {
+                        case "vbTab":
+                            {
+                                Separator[nSep] = Constants.vbTab;
+                                break;
+                            }
+                    }
+                }
+            }
+
+
+            if (System.IO.Path.GetExtension(XLSFileName) == ".txt")
+                dtToImport = FncSave_LoadGridFile.LoadTxtToDataTable(XLSFileName, "<&>");
+            else
+                dtToImport = FncExcel.ConvertExcelFileToDataTableV5(XLSFileName, SheetNumber, 2);
+
+            if (Separator.Length > 1)
+            {
+                for (int rNumCol = 0; rNumCol <= Separator.Length - 1; rNumCol++)
+                    FncDataTable.ReplaceIncolumn(dtToImport, Separator[rNumCol], Separator[0], 0);
+            }
+
+            if (dtToImport.Columns.Count == 1 & (Separator != null | ! Array.Exists(Separator, s => s == "")))
+                // มี Col เดียว เพราะเพิ่ง Qry มาจาก AS400 ใหม่ๆ หรือ เป็น DT มาจากไฟล์ W Excel ที่ยังไม่ TextToCol 
+                dtToImport = FncAS400.As400DataTableTextToColumn(ref dtToImport, Separator[0], true, true);
+            else
+                // ไม่ต้อง TxtToCol เซฟไฟล์เก็บไว้อย่างเดียว
+                dtToImport = FncDataTable.Trim_DataTable(dtToImport);
+
+
+            if (PathSaveFile != null)
+            {
+                PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
+                FncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator[0]);
+            }
+            // ###################
+            // ###############################################
+            // วนสร้าง Column ที่เป็นของ Attribute
+            if (Dct_AttrNameAndVal != null)
+            {
+                int nColAdd = 0;
+                foreach (KeyValuePair<string, string> pair in Dct_AttrNameAndVal)
+                {
+                    string AttributeName = pair.Key;
+                    string AttributeVal = pair.Value;
+
+                    var dtCol_Att = new DataColumn() { ColumnName = AttributeName, DataType = typeof(string), DefaultValue = AttributeVal };
+                    dtCol_Att.ReadOnly = false;
+                    dtToImport.Columns.Add(dtCol_Att);
+                    dtToImport.Columns[dtCol_Att.ColumnName].SetOrdinal(nColAdd);
+                    nColAdd += 1;
+                }
+            }
+
+            // ###############################################
+            MsSql_Manager SqlServer = new MsSql_Manager(ConnString); // (txt_Host.Text, txt_User.Text, txt_Passw.Text, txt_Database.Text)
+            // ## นำ ข้อมูล As400 เข้า DataBase
+            // สร้างคำสั่งสร้างตารางสำหรับ นำ ไฟล์ As400 เข้า DataBase
+            var Imp_TableName = ToTableName;
+
+            string SqlCrtImptTable; // = FncDataBaseTool.GenCreateTableImport(Imp_TableName, dtToImport.Columns.Count) '+ 1) '+1 เผื่อไว้แก้ตาราง
+            if (WantColumnNameTableByDataTable == true)
+                SqlCrtImptTable = FncDataBaseTool.GenCreateTableByDataTableImport(Imp_TableName, dtToImport);
+            else
+                SqlCrtImptTable = FncDataBaseTool.GenCreateTableImport(Imp_TableName, dtToImport.Columns.Count);
+
+            // สร้างตาราง ตรวจสอบว่ามีตารางหรือไม่แล้ว ถ้ามีให้ลบก่อนสร้าง
+            if (SqlServer.TableExists(Imp_TableName))
+                SqlServer.DeleteTable(Imp_TableName);
+            SqlServer.ExecuteNonQuery(SqlCrtImptTable);
+
+            // ###################
+            SqlServer.CopyDatatableToDatabaseTable(dtToImport, Imp_TableName);
+
+            // MsgBox("บันทึกไฟล์เข้าฐานข้อมูลแล้ว")
+            Interaction.Beep();
+        }
+
 
         // New No Test
         private static DataTable ConvertToDataTable(ref ArrayList arraylist)

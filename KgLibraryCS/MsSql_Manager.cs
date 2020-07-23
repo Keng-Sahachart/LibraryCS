@@ -14,7 +14,7 @@ namespace kgLibraryCs
     {
 
         public string ConnectionString { set; get; }
-        public SqlConnection Connection = new SqlConnection() ;//{ set; get; }
+        public SqlConnection Connection = new SqlConnection();//{ set; get; }
         public SqlTransaction Transaction { set; get; }
 
         //################################################################
@@ -23,7 +23,7 @@ namespace kgLibraryCs
         public MsSql_Manager(SqlConnection SqlConn) { Connection = SqlConn; }
         public MsSql_Manager() { ; }
 
-        public MsSql_Manager(string myConnectString) {  SetConnectionString(myConnectString); }
+        public MsSql_Manager(string myConnectString) { SetConnectionString(myConnectString); }
 
         public MsSql_Manager(String Host, String UserName, String Password, String DataBaseName)
         {
@@ -37,7 +37,8 @@ namespace kgLibraryCs
 
         public string SetConnectionString(string myConnectString)
         {
-            if(Connection.ConnectionString != myConnectString){
+            if (Connection.ConnectionString != myConnectString)
+            {
                 Connection.Close();
             }
             Connection.ConnectionString = myConnectString;
@@ -47,18 +48,21 @@ namespace kgLibraryCs
 
         public System.Data.ConnectionState OpenConnecAuto()
         {
-            if (Connection.State == ConnectionState.Closed & Connection.ConnectionString == "") {
+            if (Connection.State == ConnectionState.Closed & Connection.ConnectionString == "")
+            {
                 return Connection.State;
             }
-            if (Connection.State == ConnectionState.Closed & Connection.ConnectionString != "") {
+            if (Connection.State == ConnectionState.Closed & Connection.ConnectionString != "")
+            {
                 Connection.Open();
                 return Connection.State;
             }
-            return  ConnectionState.Broken;
+            return ConnectionState.Broken;
         }
 
-        public ConnectionState CloseConnection() {    
-            Connection.Close()  ;
+        public ConnectionState CloseConnection()
+        {
+            Connection.Close();
             return Connection.State;
         }
 
@@ -75,7 +79,7 @@ namespace kgLibraryCs
         public DataTable QueryDataTable(string strSQL)
         {
             SqlDataAdapter myDataAdapter = new SqlDataAdapter(strSQL, Connection);
-            DataTable myDataTable = new DataTable() ;
+            DataTable myDataTable = new DataTable();
             //OpenConnecAuto()
             myDataTable.Clear();
             myDataAdapter.SelectCommand.CommandTimeout = 120;
@@ -155,16 +159,19 @@ namespace kgLibraryCs
         /// <returns>Number Row Affected</returns>
         public int ExecuteNonQuery(String strSQL)
         {
-            int resNumRowAffected=0;
-            try {
+            int resNumRowAffected = 0;
+            try
+            {
                 SqlCommand myCommand = new SqlCommand(strSQL, Connection);
                 myCommand.CommandTimeout = 600;
                 //OpenConnecAuto();
                 resNumRowAffected = myCommand.ExecuteNonQuery();
                 return resNumRowAffected;
-            } catch (Exception ex){
-                Console.Beep(5000,2000) ;
-                MessageBox.Show("Command ExecuteNonQuery Error: \n"  + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.Beep(5000, 2000);
+                MessageBox.Show("Command ExecuteNonQuery Error: \n" + ex.Message);
                 return resNumRowAffected;
             }
         }
@@ -176,13 +183,16 @@ namespace kgLibraryCs
         public Object ExecuteScalar(String strSQL)
         {
             Object ObjResult;
-            try {
+            try
+            {
                 SqlCommand myCommand = new SqlCommand(strSQL, Connection);
                 myCommand.CommandTimeout = 3600;
                 //OpenConnecAuto()
                 ObjResult = myCommand.ExecuteScalar();
                 return ObjResult;
-            } catch (Exception ex){
+            }
+            catch (Exception ex)
+            {
                 return ex;
             }
         }
@@ -191,7 +201,8 @@ namespace kgLibraryCs
         //################################################################
         #region Transaction Management
 
-        public void TransactionStart(){
+        public void TransactionStart()
+        {
             Transaction = Connection.BeginTransaction(IsolationLevel.ReadCommitted);
         }
 
@@ -251,6 +262,21 @@ namespace kgLibraryCs
             bulkcopy.DestinationTableName = TagetTable;
             bulkcopy.WriteToServer(dt);
         }
+
+        /// <summary>
+        /// เอา DataTable Copy ไปสร้าง Table ใหม่หรือทับ ตารางเดิม ตาราง สำหรับ Import 
+        /// </summary>
+        /// <param name="dtImp"></param>
+        /// <param name="TagetTableName"></param>
+        public void RepalceTableImported(DataTable dtImp, String TagetTableName)
+        {
+            string sqlCreateTable;
+            this.ExecuteNonQuery("drop table " + TagetTableName);
+            sqlCreateTable = FncDataBaseTool.GenCreateTableImport(TagetTableName, dtImp.Columns.Count);
+            this.ExecuteNonQuery(sqlCreateTable);
+            this.CopyDatatableToDatabaseTable(dtImp, TagetTableName);
+        }
+
 
         #endregion Special Function
 

@@ -119,9 +119,8 @@
     <Content Include="InterOpDll\Microsoft.Office.Interop.Excel.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MacroLib.xlsm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="VBA\MacroLib.xls" />
+    <None Include="VBA\MacroLib.xlsm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Class\" />
