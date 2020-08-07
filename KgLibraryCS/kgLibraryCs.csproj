@@ -120,7 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="VBA\MacroLib.xls" />
-    <None Include="VBA\MacroLib.xlsm" />
+    <None Include="VBA\MacroLib-X630807.xlsm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Class\" />
