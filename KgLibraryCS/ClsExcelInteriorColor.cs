@@ -7,7 +7,7 @@ namespace kgLibraryCs
     /// โดยเฉพาะ Excel 2003 ที่จะมีสีให้ใช้แค่ 56 สี
     /// </summary>
     /// <remarks></remarks>
-    public class ClsExcelInteriorColor
+    public class ExcelInteriorColor
     {
 
         struct PropertyInteriorColor
@@ -19,7 +19,7 @@ namespace kgLibraryCs
 
         public  PropertyInteriorColor[] ExcelInteriorColors ;// = new  PropertyInteriorColor[57];
 
-        ClsExcelInteriorColor()
+        ExcelInteriorColor()
         {
             ExcelInteriorColors = new PropertyInteriorColor[57];
             // InteriorColors(1).ColorRGB = Color.FromArgb(0, 0, 0) : InteriorColors(1).Name = ""

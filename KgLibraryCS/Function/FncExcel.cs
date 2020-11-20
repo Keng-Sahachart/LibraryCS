@@ -296,6 +296,23 @@ namespace kgLibraryCs
             wShtRet = wBook.ActiveSheet;
             return wShtRet;
         }
+
+        public static Excel.Worksheet CopySheet(ref Excel.Workbook wBook, String shtName, int numSheetDestination = 0)
+        {
+            var wShtRet = new Excel.Worksheet();
+            try
+            {
+                wBook.Sheets[shtName].Copy(Before: wBook.Sheets[numSheetDestination]);
+                
+            }
+            // Return wShtRet 'wBook.Worksheets(numSheetDestination)
+            catch //(Exception ex)
+            {
+                wBook.Sheets[shtName].Copy(after: wBook.Sheets[wBook.Sheets.Count]);
+            }
+            wShtRet = wBook.ActiveSheet;
+            return wShtRet;
+        }
         /// <summary>
     /// Copy ทุกชีทจาก WorkBook แรก ไปอยู่อีก WorkBook ที่สอง
     /// </summary>
@@ -1806,6 +1823,20 @@ namespace kgLibraryCs
             if (SerialDate > 59)
                 SerialDate -= 1; // '// Excel/Lotus 2/29/1900 bug
             return new DateTime(1899, 12, 31).AddDays(SerialDate);
+        }
+
+        public static String sheetNameUnique(Excel.Workbook wb,string shtName){
+
+            int Counter = 1;
+            String strName = shtName;
+
+            while (SheetExists(wb, strName))
+            {
+                strName = shtName + '_' + Counter;
+                Counter = Counter + 1;
+            }
+
+            return strName;
         }
     }
 }
