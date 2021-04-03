@@ -167,7 +167,7 @@ namespace kgLibraryCs
         /// </summary>
         /// <param name="StrData">String Data</param>
         /// <returns>'String Data'</returns>
-        public static string SqlEsc(string StrData)
+        public static string sqlEsc(string StrData)
         {
             StrData = "N'" + StrData.Replace("'", "''") + "'";
             return StrData;
@@ -668,8 +668,9 @@ namespace kgLibraryCs
             {
                 for (int nAttr = 0, loopTo = ArL_AttrNameAndVal.Count - 1; nAttr <= loopTo; nAttr++)
                 {
-                    string AttributeName = (string)ArL_AttrNameAndVal[nAttr];
-                    string AttributeVal = (string)ArL_AttrNameAndVal[nAttr];
+                    string[] arAttr = (string[])ArL_AttrNameAndVal[nAttr];
+                    string AttributeName = (string)arAttr[0];
+                    string AttributeVal = (string)arAttr[1];
 
                     // Dim ColName As String = AttributeName
 

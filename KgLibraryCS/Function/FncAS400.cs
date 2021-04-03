@@ -801,8 +801,9 @@ namespace kgLibraryCs
             {
                 for (int nAttr = 0, loopTo = ArL_AttrNameAndVal.Count - 1; nAttr <= loopTo; nAttr++)
                 {
-                    string AttributeName = (string)ArL_AttrNameAndVal[nAttr];
-                    string AttributeVal = (string)ArL_AttrNameAndVal[nAttr];
+                    string[] arAttr = (string[])ArL_AttrNameAndVal[nAttr];
+                    string AttributeName = arAttr[0];
+                    string AttributeVal = arAttr[1];
 
                     // Dim ColName As String = AttributeName
 
@@ -828,9 +829,9 @@ namespace kgLibraryCs
             else
                 SqlCrtImptTable = FncDataBaseTool.GenCreateTableImport(Imp_TableName, dtToImport.Columns.Count);
 
-        
+
             if (AppendData == false)
-            {  
+            {
                 // สร้างตาราง ตรวจสอบว่ามีตารางหรือไม่แล้ว ถ้ามีให้ลบก่อนสร้าง
                 if (SqlServer.TableExists(Imp_TableName))
                 {
@@ -846,18 +847,18 @@ namespace kgLibraryCs
             SqlServer.CloseConnection();
         }
 
-        public static void ImportQryAS400ToTableDataBase_WithFileAttribute_SeparatorS(string FileName, string Member
-                                                                    , string[] Separator
+        public static void ImportQryAS400ToTableDataBase_WithFileAttribute_SeparatorS(string FileName, string Member, string[] Separator
                                                          , string ConnString, string ToTableName
                                                          , string PathSaveFile = null
                                                          , Dictionary<string, string> AttrNameAndVal = null
                                                          , bool WantColumnNameTableByDataTable = false
- )
+                                                         , string ipAs400 = "192.10.10.10"
+                                                         )
         {
             DataTable dtToImport = null/* TODO Change to default(_) if this is not a reference type */;
             string AS400_FileName = FileName;
 
-            dtToImport = FncAS400.QryAS400ToDatatableV2(AS400_FileName, Member);
+            dtToImport = FncAS400.QryAS400ToDatatableV2(AS400_FileName, Member, ipAs400);
             if (Separator.Length > 1)
             {
                 for (int rNumCol = 0; rNumCol <= Separator.Length - 1; rNumCol++)
@@ -876,7 +877,7 @@ namespace kgLibraryCs
                 dtToImport = FncDataTable.Trim_DataTable(dtToImport);
             if (PathSaveFile != null)
             {
-                PathSaveFile = FncFileFolder. NewFileNameUnique(PathSaveFile);
+                PathSaveFile = FncFileFolder.NewFileNameUnique(PathSaveFile);
                 FncSave_LoadGridFile.DataTableSaveToTxtFile1(ref dtToImport, PathSaveFile, Separator[0]);
             }
             // ###############################################
@@ -926,6 +927,6 @@ namespace kgLibraryCs
 
 
 
-   
+
     }
 }
