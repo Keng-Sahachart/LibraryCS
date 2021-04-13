@@ -602,7 +602,7 @@ namespace kgLibraryCs
         }
 
 
-        /*
+        
         /// <summary>
         /// Copy Module ข้าม Workbook
         /// </summary>
@@ -627,7 +627,9 @@ namespace kgLibraryCs
             // On Error Resume Next
             // Dim n As Integer = 1
 
-            SourceWB.VBProject.VBComponents.VBE.Export(strTempFile);
+            string moduleCode;
+            moduleCode = readVbaToString(SourceWB, );
+            SourceWB.VBProject.VBComponents.VBE.ActiveCodePane.Export(strTempFile);
             
             //Microsoft.Vbe.Interop.VBComponents cmpComponent;
             //cmpComponent = SourceWB.VBProject.VBComponents;
@@ -636,8 +638,9 @@ namespace kgLibraryCs
             TargetWB.VBProject.VBComponents.Import(strTempFile);
             FileSystem.Kill(strTempFile);
         }
+        
 
-        /// <summary>
+    /// <summary>
     /// Copy Module ข้าม Workbook ทั้งหมด
     /// </summary>
     /// <param name="SourceWB"></param>
@@ -669,9 +672,45 @@ namespace kgLibraryCs
                 n += 1;
             }
         }
-        */
 
+        public static string readVbaToString(Excel.Workbook SourceWB, String ModuleName)
+        {
+            String strCode = ""; 
 
+            VBIDE.VBProject VBProj;
+            //VBIDE.VBComponent VBComp;
+            VBIDE.CodeModule CodeMod;
+
+            VBProj = SourceWB.VBProject;
+
+            int n = 0;
+            foreach (VBIDE.VBComponent VBComp in VBProj.VBComponents)
+            {
+                if ((int)VBComp.Type == (int)VBIDE.vbext_ComponentType.vbext_ct_StdModule)
+                {
+                    CodeMod = VBComp.CodeModule;
+                    {
+                        var withBlock = CodeMod;
+                    }
+                    // CopyModule(SourceWB, CodeMod.Name, TargetWB)
+                    // CopyModule(SourceWB, CodeMod, TargetWB, n);
+                    if (CodeMod.Name == ModuleName)
+                    {
+                        int i  ;
+                        
+                        for( i = 1;i <= CodeMod.CountOfLines;i++){
+                            strCode = strCode + CodeMod.Lines[i, 1].ToString();//& vbNewLine
+                        }
+                           
+                    }
+                }
+                else
+                {
+                }
+                n += 1;
+            }
+            return strCode;
+        }
         /// <summary>
     /// Insert New Module ด้วย String ที่เป็น Code Macro
     /// </summary>
@@ -680,14 +719,17 @@ namespace kgLibraryCs
     /// <param name="MacroCode"></param>
     /// <returns></returns>
     /// <remarks></remarks>
-        public static bool InsertMacro(ref Excel.Application xlApp, ref Excel.Workbook wBook, string MacroCode)
+        public static bool InsertMacro(ref Excel.Application xlApp, ref Excel.Workbook wBook, string MacroCode,string moduleName ="")
         {
             VBIDE.VBComponent oModule;
             try
             {
                 // Create a new VBA code module.
                 oModule = wBook.VBProject.VBComponents.Add(VBIDE.vbext_ComponentType.vbext_ct_StdModule);
-
+                if (moduleName != "")
+                {
+                    oModule.Name = moduleName;
+                }
                 // Add the VBA macro to the new code module.
                 oModule.CodeModule.AddFromString(MacroCode);
                 return true;

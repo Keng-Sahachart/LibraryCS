@@ -10,6 +10,8 @@ using System.Windows.Forms;
 //    // do something
 //}
 //...
+
+/* ใช้แทน MsgBoxAutoClose */
 namespace kgLibraryCs
 {
     public class AutoClosingMessageBox
